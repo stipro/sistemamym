@@ -1,0 +1,420 @@
+* {
+	padding:0;
+	margin:0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /*font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;*/
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    list-style: none;
+    /*color: rgba(0,0,0,.87);*/
+}
+a{
+    color: rgba(0,0,0,.87);;
+}
+.ptapcl{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*ISOTIPO*/
+.loghead{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1em 1em 1em;
+}
+.isot{
+    display: flex;
+    font-size: 8em;
+    min-height: 1.1em;
+    min-width: 1.1em;
+    background-image: url(../img/isotipo2.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.iisot{
+    width: 7em;
+}
+.nemp{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: lighter;
+    font-size: 1.5em;
+    text-align: center;
+}
+.tituhead{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: lighter;
+    font-size: 1em;
+}
+/*CUERPO*/
+.logbody{
+    display: grid;
+    justify-content: center;
+}
+.iptcont{
+    margin: .4em;
+    display: flex;
+    align-items: center;
+}
+.iptconticon{
+    display: flex;
+    justify-content: center;;
+}
+/*BOTONES*/
+.btnCan{
+    background-color: #6c757d;
+    border-radius: .25rem;
+}
+.btnCan:hover{
+    color: #6c757d;
+}
+.btnReg{
+    background-color: #4caf50;
+    border-radius: .25rem;
+}
+.btnReg:hover{
+    color: #4caf50; 
+}
+.btnReg, .btnCan{
+    padding: .375rem .75rem;
+    color: #fff;
+    border: 1px solid;
+}
+.btnCan:hover,.btnReg:hover{
+    background-color: #fff;
+}
+/*IMPUTS*/
+.iptbase{
+    padding: .8em;
+	border: 1px solid rgba(34,36,38,.15);
+	border-radius: .28em;
+	padding-left: 3em;
+}
+.iptbase:focus{
+	border-color: #4caf50;
+}
+/*ICONOS*/
+.ipticon{
+    position: absolute;
+    margin: 0.75rem;
+}
+.grupBarra{
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.icon-house{
+    background-image: url(../icon/icon-modulos/menu_principal1.png);
+    background-repeat: no-repeat;
+}
+.icon-comisiones{
+    background-image: url(../icon/icon-modulos/comisiones1.png);
+    background-repeat: no-repeat;
+}
+.icon-sunat-ose{
+    background-image: url(../icon/icon-modulos/sunat.png);
+    background-repeat: no-repeat;
+}
+.icon-cheklist{
+    background-image: url(../icon/icon-modulos/checklist1.png);
+    background-repeat: no-repeat;
+}
+.icon-inventario{
+    background-image: url(../icon/icon-modulos/inventario1.png);
+    background-repeat: no-repeat;
+}
+.icon-atencion{
+    background-image: url(../icon/icon-modulos/atencioncliente1.png);
+    background-repeat: no-repeat;
+}
+.icon-farma{
+    background-image: url(../icon/icon-modulos/comisiones/farmacia.svg);
+    background-repeat: no-repeat;
+}
+.icon-consumo{
+    background-image: url(../icon/icon-modulos/comisiones/tienda-online1.svg);
+    background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 20rem)
+{
+    .grupBarra{
+        background-color: red;
+    }
+    .grupContBarra{
+        display: none;
+    }
+    .ico-inicio{
+        margin: 0;
+    }
+}
+/* Celulares VGA y HD 320px, 640px */
+@media only screen and (min-width: 20rem) and (max-width: 40rem)
+{
+    .grupContBarra{
+        /*display: none;*/
+        /*height: calc(100% - 3.5em);*/
+        width: 80%;
+        background-color:#fff;
+        clip-path: circle(0px at top left);
+        transition: clip-path ease-in-out 700ms;
+        position: absolute;
+        top: 3.5em;
+    }
+    .grupContLi{
+        border-bottom: 1px solid #575766;
+        border-right: 1px solid #575766;
+    }
+    .grupContLi:hover{
+        background-color: #4caf50;
+    }
+    .iconCont-menu{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 2em 6em;;
+    }
+    .iconItem-menu{
+        min-width: 1.1em;
+        min-height: 1.1em;
+        font-size: 1.6em;
+        background-size: 100%;
+        margin-right: 1em;
+    }
+    .grupContBarra-open{
+        clip-path: circle(150% at top right);
+    }
+    .TopMenContenedor{
+        background-color: #4caf50;
+        display: flex;
+        height: 3.5em;
+        border-bottom: 1px solid #575766;
+    }
+    .ico-inicio{
+        margin: 0.5rem;
+        display: flex;
+    }
+    .iconContinicio{        
+        padding: 0.25rem 0.75rem;
+        border: 1px solid transparent;
+        border-color: rgba(0,0,0,.1);
+        display: flex;
+        align-items: center;
+    }
+    .grupOpti{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .iconItemOpti{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgba(0,0,0,.87);
+    }
+    .contModu{
+        font-size: .8em;
+        text-align: center;
+        padding: 1em;
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+        margin: .9em;
+    }
+    .eleBtnModu{
+        margin: 1rem;
+    }
+    .contelembtnModu{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        justify-items: center;
+        border: 0.2em solid #cfcfcf;
+        border-radius: 0.5rem;
+        padding: .5rem;
+        align-items: center;
+        background-color: #fff;
+    }
+    .contelembtnModu:hover{
+        background-color: green;
+    }
+    .iconbtnModu{
+        min-width: 1.1em;
+        min-height: 1.1em;
+        font-size: 5em;
+        background-size: 100%;
+        margin-right: 1rem;
+    }
+    .herModu{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .herrElemModu{
+        background-color: white;
+        padding: .5rem;
+        border-radius: .25rem;
+        border: 1px solid #cfcfcf;
+        margin: 0 .5em .5rem;
+    }
+    .herrElemModu:hover{
+        background-color: #4caf50;
+    }
+    .herrElemModu::before{
+        font-size: 1.5rem;
+    }
+    .heatConModu{
+        padding: 0 !important;
+    }
+    .heatul{
+        display: inline-flex;
+    }
+    .heatItem{
+        padding: 1em;
+    }
+    .heatItem:hover{
+        background-color: #eee;
+    }
+    /* CHEKLIST */
+    .progBtn{
+        background-color: #4caf50;
+        padding: .4rem .5rem;
+        border: 1px solid #086a41;
+    }
+    .progBor{
+        display: block;
+        border-bottom: 3px solid #4caf50;
+        margin-top: .9rem;
+    }
+    .progBar{
+        display: block;
+        background: #9edda1;
+        height: .7rem;
+    }
+}
+/* CELULARES HD* 641px, 1024 */
+@media only screen and (min-width: 40.0625rem) and (max-width: 64rem)
+{
+    .grupBarra{
+        background-color: royalblue;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        height: 2.7em;
+    }
+    .grupContBarra{
+        display: flex;
+    }
+    .grupContLi{
+        display: block;
+        width: 5rem;
+        height: 2.7em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+    }
+    .grupContLi:hover{
+        background-color: #cfcfcf;
+    }
+    .iconCont-menu{
+        display: grid;
+        grid-template-rows: 2.7em;
+    }
+    .iconItem-menu{
+        background-position: 50%;
+        background-size: 1.7em;
+    }
+    .iconLetr-menu{
+        display: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 1.3em;
+        padding: 0 .5em;
+    }
+    .TopMenContenedor{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .grupOpti{
+        display: flex;
+    }
+    .iconItemOpti{
+        display: flex;
+        align-items: center;
+        padding: 0 .9em;
+    }
+    .ico-inicio,.ico-retro,.img-mym{
+        display: none !important;
+    }
+}
+/*  1025px y 1024px CELULARES FULL HD*/
+@media only screen and (min-width: 64.0625rem) 
+{
+    .grupBarra{
+        background-color: #fff;
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+    .grupContBarra{
+        display: flex;
+    }
+    .TopMenContenedor{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .grupOpti{
+        display: flex;
+    }
+    .grupContLi{
+        list-style: none;
+        border-right: 1px solid rgba(34,36,38,.15);
+    }
+    .ico-inicio,.ico-retro,.img-mym{
+        display: none !important;
+    }
+    .iconCont-menu{
+        display: grid;
+        text-decoration: none;
+        text-align: center;
+        color: #1b1c1d;
+    }
+    .iconItem-menu{
+        font-size: 1.71428571em !important;
+        margin: .1 auto 0 !important;
+        width: 80px;
+        height: 50px;
+        background-position: 50%;
+        background-size: 1.5em;
+    }
+    .icon-house{
+        width: 80px;
+        height: 50px;
+        background-position: 50%;
+        background-size: 1.5em;
+    }
+    .icon-comisiones{
+        width: 80px;
+        height: 50px;
+        background-position: 50%;
+        background-size: 1.5em;
+    }
+    .icon-cheklist{
+        width: 80px;
+        height: 50px;
+        background-position: 50%;
+        background-size: 1.5em;
+    }
+    .iconItemOpti{
+        margin: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        display: flex;
+        align-items: center;
+    }
+}
+.resp{
+    display: grid;
+}

@@ -1,0 +1,482 @@
+<?php
+include('./../db/conexionPDO.php');
+try
+{
+    //Fecha del Servidor
+    $fecha = date("Y.m.d");
+    //Fecha conbinada
+    $fecusu= $_POST['ifecregusuxlsx'];
+    //Nombre del archivo
+    $vnomarch = $_POST['vnomarch'];
+    //convertimos en json
+    $tabla = json_decode($_POST['dataexArchivo'], true);
+    //contamos cuanto es el tamaño del array o json
+    $cantidadtabla = count($tabla);
+    //Variable para los duplicados
+    $duplicadosCol = 0;
+    //Se separa el dia mes año
+    list($frdanio, $frdmes, $frddia) = explode("-",$fecusu);
+    //Se compara el nombre del archivo
+    if($vnomarch == "AVANCEVENDEDOR")
+    {
+        //echo 'Archivo Admitido '.$vnomarch.' ';
+
+        //echo $frdmes;
+        //var_dump($tabla);
+        foreach ($tabla as $clave) 
+        {
+            $vendeDato = explode(" ", $clave["VENDEDOR"]);
+            $venzon = $clave["ZONA"];
+            $ventipId = $clave["TIPO"];
+            //var_dump($clave["VENDEDOR"]);
+            $num=count($vendeDato);
+            switch ($num)
+            {          
+            case 1:
+                break;
+            case 2:
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "PNombre" => $vendeDato[1]];
+                $papellido = $vendeDato[0];
+                $pnombre = $vendeDato[1];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VPNOCOL=:pnombre AND VAPACOL=:papellido)tbl_tmp GROUP BY id");
+                $existenteCol->bindValue(':papellido',$papellido);
+                $existenteCol->bindValue(':pnombre',$pnombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+            if ($resexistenteCol['id'] == FALSE)
+            {
+                //INSERTA COLABORADORES
+                $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VPNOCOL) VALUES (:papellido, :pnombre )");
+                $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
+                $insertCol -> bindValue(':pnombre', $pnombre, PDO::PARAM_STR);
+                $insertCol -> execute();
+                //OOBTENGO ID DE LA INSERTACIÓN
+                $lastcolIdsql = $conexion->lastInsertId();
+                //INSERTA VENDEDOR
+                $insertVen = $conexion->prepare("INSERT INTO t00ven (NZONVEN, FIDCOL, FIDTIPVEN) VALUES (:venzon, :lastcolIdsql, :ventipId )");
+                $insertVen -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
+                $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
+                $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
+                $insertVen -> execute();
+            }
+            else{
+                //echo'dos palabras 2';
+                //echo 'Ya existe COLABORADOR'.$resexistenteCol['id'];
+            }
+                break;
+            case 3:
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2]];
+                $papellido = $vendeDato[0];
+                $sapellido = $vendeDato[1];
+                $pnombre = $vendeDato[2];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VPNOCOL=:pnombre AND VAPACOL=:papellido AND VAMACOL=:sapellido)tbl_tmp GROUP BY id");
+                $existenteCol->bindValue(':papellido',$papellido);
+                $existenteCol->bindValue(':sapellido',$sapellido);
+                $existenteCol->bindValue(':pnombre',$pnombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+            if ($resexistenteCol['id'] == FALSE)
+            {
+                echo'Se va registrar ';
+                //INSERTA COLABORADORES
+                $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL) VALUES (:papellido, :sapellido, :pnombre)");
+                $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
+                $insertCol -> bindValue(':sapellido', $sapellido, PDO::PARAM_STR);
+                $insertCol -> bindValue(':pnombre', $pnombre, PDO::PARAM_STR);
+                $insertCol -> execute();
+                //OOBTENGO ID DE LA INSERTACIÓN
+                $lastcolIdsql = $conexion->lastInsertId();
+                //INSERTA VENDEDOR
+                $insertVen = $conexion->prepare("INSERT INTO t00ven (NZONVEN, FIDCOL, FIDTIPVEN) VALUES (:venzon, :lastcolIdsql, :ventipId )");
+                $insertVen -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
+                $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
+                $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
+                $insertVen -> execute();
+            }
+            else{   
+                //echo'dos palabras 3';
+                //echo 'Ya existe COLABORADOR'.$resexistenteCol['id'];
+            }
+                break;
+            case 4:
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2], "SNombre" => $vendeDato[3]];
+                $papellido = $vendeDato[0];
+                $sapellido = $vendeDato[1];
+                $pnombre = $vendeDato[2];
+                $snombre = $vendeDato[3];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VAPACOL=:papellido AND VAMACOL=:sapellido AND VPNOCOL=:pnombre AND VSNOCOL=:snombre)tbl_tmp GROUP BY id");
+                $existenteCol->bindValue(':papellido',$papellido);
+                $existenteCol->bindValue(':sapellido',$sapellido);
+                $existenteCol->bindValue(':pnombre',$pnombre);
+                $existenteCol->bindValue(':snombre',$snombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+                if ($resexistenteCol['id'] == FALSE)
+                {
+                    //INSERTA COLABORADORES
+                    $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL, VSNOCOL) VALUES (:papellido, :sapellido, :pnombre, :snombre)");
+                    $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':sapellido', $sapellido, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':pnombre', $pnombre, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':snombre', $snombre, PDO::PARAM_STR);
+                    $insertCol -> execute();
+                    //OOBTENGO ID DE LA INSERTACIÓN
+                    $lastcolIdsql = $conexion->lastInsertId();
+                    //INSERTA VENDEDOR
+                    $insertVen = $conexion->prepare("INSERT INTO t00ven (NZONVEN, FIDCOL, FIDTIPVEN) VALUES (:venzon, :lastcolIdsql, :ventipId )");
+                    $insertVen -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
+                    $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
+                    $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
+                    $insertVen -> execute();
+                }
+                else{  
+                    //echo'dos palabras 4';
+                    //echo 'Ya existe COLABORADOR'.$resexistenteCol['id'];
+                }
+                break;
+            case 5:
+                //echo "Hay muchas palabras, verifique ";
+                break;
+            }
+        }
+        $fregavaven = $conexion->prepare("SELECT  DISTINCT DFECREG FROM t011avavendedor WHERE MONTH(DFECREG)=:frdmes");// OBTENER FECHA RE REGISTRO XLSX
+        $fregavaven->bindValue(':frdmes',$frdmes);
+        $fregavaven->execute();
+        $dfregavaven = $fregavaven->fetch(PDO::FETCH_ASSOC);
+        //var_dump($dfregavaven["DFECREG"]);
+        
+        if(is_null($dfregavaven["DFECREG"]))
+        {
+            echo'Es null xD';
+            $impExcel = $conexion -> prepare("INSERT INTO t011avavendedor (NVENBRU, NNETCRE, NVENNET, NCUOTA, NPORCEN, NTOTCLI, NCOBERT, NCOBRAD, NTIPCOB, NMOROSI, NMOROSO, DFECREG) 
+            VALUES (:selection_2,:selection_3,:selection_4,:selection_5,:selection_6,:selection_7,:selection_8,:selection_9,:selection_10,:selection_11,:selection_12,:selection_13)");
+            foreach ($tabla as $k => $row)
+            {
+                $impExcel -> bindParam(':selection_2', $row["V.BRUTA"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_3', $row["N.CREDITO"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_4', $row["V.NETA"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_5', $row["CUOTA"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_6', $row["%"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_7', $row["T.CLIENTES"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_8', $row["COBERTURA"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_9', $row["COBRADO"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_10', $row["T.XCOBRAR"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_11', $row["MOROSIDAD(%)"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_12', $row["MOROSO"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_13', $fecusu, PDO::PARAM_STR);
+                $ejecutar = $impExcel -> execute();
+            }
+        }
+        else{
+            echo '
+            <div class="alerweb-erro">
+                <a href="#" class="clos" data-dismiss="alert" aria-label="close">&times;</a>
+                No se puede registrar, <strong class="letrimpo">ya hay registros con el Mes '.$frdmes.'</strong>, vuelva a intentarlo.
+            </div>';
+        }
+        
+    }
+    elseif($vnomarch == "SALIDASCONDICIONVENTA")
+    {
+        echo 'Archivo Admitido '.$vnomarch;
+        //var_dump($tabla);
+        foreach ($tabla as $clave) 
+        {
+            $vendeDato = explode(" ", $clave["Vendedor"]);
+            $venzon = $clave["Zona"];
+            $ventipId = $clave["TIPO"];
+            //var_dump($clave["VENDEDOR"]);
+            $num=count($vendeDato);
+            switch ($num)
+            {          
+            case 1:
+                break;
+            case 2:
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "PNombre" => $vendeDato[1]];
+                $papellido = $vendeDato[0];
+                $pnombre = $vendeDato[1];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VAPACOL=:papellido AND VPNOCOL=:pnombre)tbl_tmp GROUP BY id");
+                $existenteCol->bindParam(':papellido',$papellido);
+                $existenteCol->bindParam(':pnombre',$pnombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+                //CONSULTA VENDEDOR
+                $existenteVen = $conexion->prepare('SELECT FIDCOL, FIDTIPVEN FROM t00ven');
+                $existenteVen->bindParam(':papellido',$papellido);
+                $existenteVen->bindParam(':pnombre',$pnombre);
+                $existenteVen->execute();            
+            if ($resexistenteCol['id'] == FALSE)
+            {
+                //INSERTA COLABORADORES
+                $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VPNOCOL) VALUES (:papellido, :pnombre )");
+                $insertCol -> bindParam(':papellido', $papellido, PDO::PARAM_STR);
+                $insertCol -> bindParam(':pnombre', $pnombre, PDO::PARAM_STR);
+                $insertCol -> execute();
+                //CONSULTA COLABORADOR PARA SACAR ID
+                $existenteColId = $conexion->prepare("SELECT NIDCOL FROM t002col WHERE VAPACOL=:papellido AND VPNOCOL=:pnombre");
+                $existenteColId->bindParam(':papellido',$papellido);
+                $existenteColId->bindParam(':pnombre',$pnombre);
+                $existenteColId->execute();
+                $resexistenteColId = $existenteColId->fetch();
+                $colIdsql=$resexistenteColId['NIDCOL'];
+                //INSERTA VENDEDOR
+                $insertVen = $conexion->prepare("INSERT INTO t00ven (NZONVEN, FIDCOL, FIDTIPVEN) VALUES (:venzon, :colIdsql, :ventipId )");
+                $insertVen -> bindParam(':venzon', $venzon, PDO::PARAM_STR);
+                $insertVen -> bindParam(':colIdsql', $colIdsql, PDO::PARAM_STR);
+                $insertVen -> bindParam(':ventipId', $ventipId, PDO::PARAM_STR);
+                $insertVen -> execute();
+            }
+            else{
+                echo ' Ya existe COLABORADOR';
+            }
+                break;
+            case 3:
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2]];
+                $papellido = $vendeDato[0];
+                $sapellido = $vendeDato[1];
+                $pnombre = $vendeDato[2];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VAPACOL=:papellido AND VAMACOL=:sapellido AND VPNOCOL=:pnombre)tbl_tmp GROUP BY id");
+                $existenteCol->bindParam(':papellido',$papellido);
+                $existenteCol->bindParam(':sapellido',$sapellido);
+                $existenteCol->bindParam(':pnombre',$pnombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+                //CONSULTA VENDEDOR
+                $existenteVen = $conexion->prepare('SELECT FIDCOL, FIDTIPVEN FROM t00ven');
+                $existenteVen->bindParam(':papellido',$papellido);
+                $existenteVen->bindParam(':sapellido',$sapellido);
+                $existenteVen->bindParam(':pnombre',$pnombre);
+                $existenteVen->execute();
+                $resexistenteVen = (int)$existenteVen->fetchColumn();
+                //
+            if ($resexistenteCol['id'] == FALSE)
+            {
+                //INSERTA COLABORADORES
+                $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL) VALUES (:papellido, :sapellido, :pnombre )");
+                $insertCol -> bindParam(':papellido', $papellido, PDO::PARAM_STR);
+                $insertCol -> bindParam(':sapellido', $sapellido, PDO::PARAM_STR);
+                $insertCol -> bindParam(':pnombre', $pnombre, PDO::PARAM_STR);
+                $insertCol -> execute();
+                //CONSULTA COLABORADOR PARA SACAR ID
+                $existenteColId = $conexion->prepare("SELECT NIDCOL FROM t002col WHERE VAPACOL=:papellido AND VAMACOL=:sapellido AND VPNOCOL=:pnombre");
+                $existenteColId -> bindParam(':papellido', $papellido, PDO::PARAM_STR);
+                $existenteColId -> bindParam(':sapellido', $sapellido, PDO::PARAM_STR);
+                $existenteColId -> bindParam(':pnombre', $pnombre, PDO::PARAM_STR);
+                $existenteColId->execute();
+                $resexistenteColId = $existenteColId->fetch();
+                $colIdsql=$resexistenteColId['NIDCOL'];
+                //INSERTA VENDEDOR
+                $insertVen = $conexion->prepare("INSERT INTO t00ven (NZONVEN, FIDCOL, FIDTIPVEN) VALUES (:venzon, :colIdsql, :ventipId )");
+                $insertVen -> bindParam(':venzon', $venzon, PDO::PARAM_STR);
+                $insertVen -> bindParam(':colIdsql', $colIdsql, PDO::PARAM_STR);
+                $insertVen -> bindParam(':ventipId', $ventipId, PDO::PARAM_STR);
+                $insertVen -> execute();
+            }
+            else{   
+                echo ' Ya existe COLABORADOR';
+            }
+                break;
+            case 4:
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2], "SNombre" => $vendeDato[3]];
+                $papellido = $vendeDato[0];
+                $sapellido = $vendeDato[1];
+                $pnombre = $vendeDato[2];
+                $snombre = $vendeDato[3];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VAPACOL=:papellido AND VAMACOL=:sapellido AND VPNOCOL=:pnombre AND VSNOCOL=:snombre)tbl_tmp GROUP BY id");
+                $existenteCol->bindParam(':papellido',$papellido);
+                $existenteCol->bindParam(':sapellido',$sapellido);
+                $existenteCol->bindParam(':pnombre',$pnombre);
+                $existenteCol->bindParam(':snombre',$snombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+                //CONSULTA VENDEDOR
+                $existenteVen = $conexion->prepare('SELECT FIDCOL, FIDTIPVEN FROM t00ven');
+                $existenteVen->bindParam(':papellido',$papellido);
+                $existenteVen->bindParam(':sapellido',$sapellido);
+                $existenteVen->bindParam(':pnombre',$pnombre);
+                $existenteVen->bindParam(':snombre',$snombre);
+                $existenteVen->execute();   
+                if ($resexistenteCol['id'] == FALSE)
+                {
+                    //INSERTA COLABORADORES
+                    $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL, VSNOCOL) VALUES (:papellido, :sapellido, :pnombre, :snombre)");
+                    $insertCol -> bindParam(':papellido', $papellido, PDO::PARAM_STR);
+                    $insertCol -> bindParam(':sapellido', $sapellido, PDO::PARAM_STR);
+                    $insertCol -> bindParam(':pnombre', $pnombre, PDO::PARAM_STR);
+                    $insertCol -> bindParam(':snombre', $snombre, PDO::PARAM_STR);
+                    $insertCol -> execute();
+                    //CONSULTA COLABORADOR PARA SACAR ID
+                    $existenteColId = $conexion->prepare("SELECT NIDCOL FROM t002col WHERE VAPACOL=:papellido AND VAMACOL=:sapellido AND VPNOCOL=:pnombre AND VSNOCOL=:snombre");
+                    $existenteColId -> bindParam(':papellido', $papellido, PDO::PARAM_STR);
+                    $existenteColId -> bindParam(':sapellido', $sapellido, PDO::PARAM_STR);
+                    $existenteColId -> bindParam(':pnombre', $pnombre, PDO::PARAM_STR);
+                    $existenteColId -> bindParam(':snombre', $snombre, PDO::PARAM_STR);
+                    $existenteColId->execute();
+                    $resexistenteColId = $existenteColId->fetch();
+                    $colIdsql=$resexistenteColId['NIDCOL'];
+                    //INSERTA VENDEDOR
+                    $insertVen = $conexion->prepare("INSERT INTO t00ven (NZONVEN, FIDCOL, FIDTIPVEN) VALUES (:venzon, :colIdsql, :ventipId )");
+                    $insertVen -> bindParam(':venzon', $venzon, PDO::PARAM_STR);
+                    $insertVen -> bindParam(':colIdsql', $colIdsql, PDO::PARAM_STR);
+                    $insertVen -> bindParam(':ventipId', $ventipId, PDO::PARAM_STR);
+                    $insertVen -> execute();
+                }
+                else{  
+                    echo ' Ya existe COLABORADOR';
+                }
+                break;
+            case 5:
+                //echo "Hay muchas palabras, verifique ";
+                break;
+            }
+        }
+        $fregavaven = $conexion->prepare("SELECT  DISTINCT DFECREG FROM t021salconventa WHERE MONTH(DFECREG)=:frdmes");// OBTENER FECHA RE REGISTRO XLSX
+        $fregavaven->bindValue(':frdmes',$frdmes);
+        $fregavaven->execute();
+        $dfregavaven = $fregavaven->fetch(PDO::FETCH_ASSOC);
+        if(is_null($dfregavaven["DFECREG"]))
+        {
+            echo'No hay registro con esta fecha, se procede a registrar';
+            $impExcel = $conexion -> prepare("INSERT INTO t021salconventa (NCENT, NCRE,  NLET, NTOT, DFECREG) VALUES (:selection_1,:selection_2,:selection_3,:selection_4,:feccomUsu)");     
+            foreach ($tabla as $k => $row)
+            {
+                //var_dump($feccomUsu);
+                $impExcel -> bindParam(':selection_1', $row["C/Entrega"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_2', $row["Credito"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_3', $row["Letra"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':selection_4', $row["Total"], PDO::PARAM_STR);
+                $impExcel -> bindParam(':feccomUsu', $fecusu, PDO::PARAM_STR);
+                $ejecutar = $impExcel -> execute();
+            }
+        }
+        else{
+            echo 'No se puede registrar, por que ya hay registros con este Mes';
+        }
+    }
+    elseif(empty($_POST['dataexArchivo']))
+    {
+        echo'Archivo No Seleccionado';
+    }
+    else{
+        echo 'No se seleccionó un archivo admitido, por favor verificar el nombre del archivo';
+    }
+    $confec=0;
+    
+    //Si no esta vacia y si esta vacia, continuara
+    //&& $confec == 0
+    if (!empty($_POST['dataexArchivo']))
+    {
+        $arrayvendedor = array();
+        $duplicadosCol = 0;
+        
+        
+        //$constipven->execute();
+        //$varcotipven = $constipven->fetch(PDO::FETCH_ASSOC);
+        //var_dump($varcotipven);
+        //echo $varcotipven['tipo'].'</br>';
+        $constipven = $conexion->prepare("SELECT  id,tipo, COUNT(*) as total  FROM (SELECT NIDTIPVEN AS id, VNOMTIPVEN AS tipo FROM t00tipven)tbl_tmp GROUP BY tipo, id");// OBTENER LOS TIPOS DE VENDEDOR
+        $constipven->execute();
+        $favarcotipven = $constipven->fetchAll(PDO::FETCH_ASSOC);
+        $fvarcotipven = $constipven->fetch(PDO::FETCH_ASSOC);
+        $vnomtip = 'FARMA';
+        if(is_bool($fvarcotipven))
+        {
+            echo '
+            <div class="alerweb-reco">
+                <a href="#" class="clos" data-dismiss="alert" aria-label="close">&times;</a>
+                Si desea Puede <button id="mdliagrTipven" class="btnReg">Agregar</button>, Tipos de Vendedores.
+            </div>';
+            //var_dump($varcotipven);
+        }
+        elseif($fvarcotipven["tipo"] == $vnomtip)
+        {
+            echo 'Ya hay registro: '.$vnomtip;
+            //echo '<button id="mdliagrTipven" class="btnReg">Agregar</button>';
+            //var_dump($varcotipven);
+        }
+        else{
+            echo "hay registro";
+        } 
+    }
+} 
+catch (PDOException $error) /// MENSAJE POR SI SURGE ALGÚN ERROR
+{ 
+print 'ERROR: '. $error->getMessage();
+$mensaje='<div class="alert alert-danger alert-dismissable col-md-offset-4 col-md-3 text-center">
+<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+<strong>ERROR AL REGISTRAR DATOS</strong></div>';
+}
+/*
+if($ejecutar) // MENSAJE DE EXITO
+{
+ echo 'se registro correctamente excel';
+}*/
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./../asset/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../asset/css/base.css">
+        <link rel="stylesheet" href="../asset/css/tabla.css">
+        <link rel="stylesheet" href="../asset/css/noti.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body>
+         MODAL AGREGAR VENDEDOR
+        <div class="modal" id="mdliteTipven" >
+            <div class="flex" id="mdlconTipven">
+                <div class="contenido-modal">
+                    <div class="modal-header flex">
+                        <h2 class="mdlhTitu">AGREGAR TIPO (VENDEDOR)</h2>
+                        <span class="close" id="mdlceriTipven">&times;</span>
+                    </div>
+                    Contenido del Modal
+                    <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-calendar"></i>
+                            <input id="iptfreg" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                        </div>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-calendar"></i>
+                            <input id="iptfreg" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese Descripcion" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="mdlfleft">
+                            <input id="" type="button" value="Ver Tipo" name="" id="" class="iconfootSubExci icon-eye-hidden">
+                        </div>
+                        <div class="mdlfrigh">
+                            <button id="btnCan" class="btn btnCan">Cancelar</button>
+                            <button id="btnReg" class="btn btnReg">Registrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script src="../asset/js/modal.js"></script>
+    <script src="./../asset/js/baseJquery.js" type="text/javascript"></script>
+</body>
+</html>

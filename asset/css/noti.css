@@ -1,0 +1,27 @@
+/*ALERTA WEB*/
+.alerweb-adve{
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    padding: 1.1em;
+}
+.adveLetr{
+    color: #0da61e;
+}
+.alerweb-erro{
+    color: #a94442;
+    background-color: #f2dede;
+    padding: 1.1em;
+}
+.alerweb-reco{
+    color: #1b1e21;
+    background-color: #d6d8d9;
+    border-color: #c6c8ca;
+    padding: 1.1em;
+}
+.letrimpo{
+    color: #a94442;
+}
+.clos{
+    color: inherit;
+}

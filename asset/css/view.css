@@ -1,0 +1,98 @@
+/* Face Toggle --------------------------------- */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    outline: none;
+    position: relative;
+    /*margin: auto;*/
+    cursor: pointer;
+    width: 6rem;
+    height: 2rem;
+    box-sizing: content-box;
+    border-radius: 3em / 2.5em;
+    /*box-shadow: 0 3em 2em hsla(0,0%,0%,.1);*/
+    background: hsl(220,20%,36%);
+    transition: background .3s, -webkit-transform .2s;
+    transition: transform .2s, background .3s;
+    transition: transform .2s, background .3s, -webkit-transform .2s;
+    -webkit-transform: perspective(200) rotateY(45deg);
+            transform: perspective(200) rotateY(45deg);
+  }
+  input[type="checkbox"]:checked {
+    background: #4caf50;
+    -webkit-transform: perspective(200) rotateY(-45deg);
+            transform: perspective(200) rotateY(-45deg);
+  }
+  input[type="checkbox"]:active {
+    -webkit-transform: perspective(200) scale(.8, .6);
+            transform: perspective(200) scale(.8, .6);
+  }
+  
+  /* eye --------------------------------- */
+  input[type="checkbox"]:after {
+    content: "\ef10";
+    position: absolute;
+    /*width: 2.5rem;
+    height: 2rem;*/
+
+    left: -1.8em;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    border-radius: 4em / 3em;
+    /*background-color: hsl(220,20%,20%);*/
+    
+    /*box-shadow: 0 .2em .5em hsla(0,0%,0%,.2);*/
+    opacity: 0;
+    -webkit-transform: scale(.8, .01);
+            transform: scale(.8, .01);
+    transition: opacity .2s, -webkit-transform .2s;
+    transition: opacity .2s, transform .2s;
+    transition: opacity .2s, transform .2s, -webkit-transform .2s;
+    font-size: 2em;
+    top: .1em;
+  }
+  
+  /* eye open --------------------------------- */
+  input[type="checkbox"]:checked:after {
+    /*background-image: radial-gradient(hsl(220,80%,20%) 15%, hsl(220,80%,80%) 20%, 
+      hsl(220,80%,66%) 40%, hsl(220,80%,96%) 44%, 
+      hsl(220,80%,80%) );*/
+    opacity: 1;
+    -webkit-transform: translate3d(4em,0,0) scale(1);
+            transform: translate3d(4em,0,0) scale(1);
+  }
+  
+  /* eye poked --------------------------------- */
+  input[type="checkbox"]:active:after {
+    opacity: .5;
+    -webkit-transform: translate3d(2em,0,0) scale(.6, .1);
+            transform: translate3d(2em,0,0) scale(.6, .1);
+  }
+  
+  /* txt --------------------------------- */
+  input[type="checkbox"]:before {
+    content: "\ef0e";
+    position: absolute;
+    top: -5px;
+    left: .5em;
+    font-size: 2em;
+    line-height: 1.5;
+    color: hsl(220,20%,20%);
+    transition: opacity .2s, -webkit-transform .2s;
+    transition: opacity .2s, transform .2s;
+    transition: opacity .2s, transform .2s, -webkit-transform .2s;
+  }
+  input[type="checkbox"]:checked:before {
+    opacity: 0;
+    -webkit-transform: translate3d(1.5em,0,0);
+            transform: translate3d(1.5em,0,0);
+  }
+  input[type="checkbox"]:active:before {
+    opacity: .5;
+    -webkit-transform: translate3d(.8em,0,0);
+            transform: translate3d(.8em,0,0);
+  }
+  
+  
+  /* BG --------------------------------- */

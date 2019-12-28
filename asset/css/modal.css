@@ -1,0 +1,203 @@
+body{
+	background: #f2f2f2;
+	font-family: 'Raleway', sans-serif;
+}
+.estiloCuadro {
+	background-color: white;
+	width: calc(100vw - 5em); 
+	border: solid red;
+	box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+	position: absolute; 
+	top: 500px; 
+	left: 30px;
+	cursor: pointer;
+	/*Deshabilitar selección de texto*/
+	-moz-user-select: none;     /* Mozilla */
+	-khtml-user-select: none;   /* Chrome */    
+	-o-user-select: none;       /* Opera */
+ }
+ .headMdl{
+	 display: flex;
+	 padding: .5em;
+ }
+ .letrCerrMdl{
+	 font-weight: 500;
+	 font-size: 1em;
+	 width: 100%;
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+ }
+ .iconCerrMdl{
+	 padding: .3em;
+	 border: 1px solid #cfcfcf;
+	 border-radius: .2em;
+	 color: #707070;
+ }
+/* CENTRAR Y PONER ESTATICO UNA IMAGEN
+header{
+	width: 100%;
+	height: calc(100vh - 3.5rem);
+	background: url('../img/fondo.png');
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+}*/
+.fsubiarchivo{
+	display: none;
+}
+.flex{
+	width: 100%;
+	height:100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.textos{
+	padding:1rem;
+	color:#fff;
+	text-align: center;
+}
+.modal{
+	display: none;
+	position: fixed;
+	z-index:1;
+	overflow: auto;
+	left: 0;
+	top:0;
+	width: 100%;
+	height:100%;
+	background: rgba(0, 0, 0, 0.452);
+}
+
+.contenido-modal{
+	position: relative;
+	background-color: #fefefe;
+	margin: .5rem .5rem;
+	border-radius: .5rem;
+	width: calc(100% - 1rem);
+	box-shadow: 0 0 6px 0 rgba(0, 0, 0, .4);
+	animation-name: modal;
+	animation-duration: 1s;
+}
+@keyframes modal{
+	from{top:-330px; opacity:0;}
+	to{top:0; opacity:1;}
+}
+.close{
+	font-size:1.5rem;
+	/*font-weight: bold;*/
+}
+.close:hover{
+	color:#7f8c8d;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-header, .modal-footer{
+	padding: .5rem .8rem;
+	color: #212529;
+}
+
+.modal-header{
+	display: flex;
+	border-bottom: 1px solid #dee2e6;
+	text-align: center;
+}
+.mdlhTitu{
+	font-size: 1em;
+}
+.modal-footer{
+	border-top: 1px solid #dee2e6;
+	display: grid;
+	grid-template-columns: 50% 50%;
+	/*grid-template-rows: auto;*/
+}
+.mdlfleft, .mdlfrigh{
+	display: flex;
+}
+.mdlfrigh{
+	justify-content: flex-end;
+}
+.cont-impo-excel-progress
+{
+	width: 100%;
+	height: 100%;
+	grid-column-start: 1;
+	grid-column-end: 3;
+}
+.imp-excel-progress::-webkit-progress-value,
+.imp-excel-progress::-moz-progress-bar
+{
+	background-color: #23d160;
+}
+.imp-excel-progress
+{
+	background: #DBDBDB;
+	height: 1rem;
+	width: 100%;
+	border: 0px;
+	border-radius: 20px;
+}
+
+.modal-body{
+	padding: 1rem;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.header-titu{
+	font-size: 1rem;
+}
+/*SUBIR ARCHIVO*/
+.conticonSubExcl{
+	padding: .5em;
+	border: 2px dashed gray;
+	border-radius: .8em;
+	cursor: pointer;
+}
+.icoSubExc{
+	width: 3em;
+	font-size: 1em;
+}
+.letSubExc{
+	color: gray;
+	margin: 1rem 0 0;
+	font-size: .9em;
+}
+.tituInpfc{
+	font-size: .9em;
+	margin: .4em;
+}
+.contInpufc{
+	display: flex;
+	align-items: center;
+}
+.iconInpufc{
+	position: absolute;
+	padding-left: .9em;
+}
+.fechconsBusExci{
+	padding: .8em;
+	border: 1px solid rgba(34,36,38,.15);
+	border-radius: .28em;
+	padding-left: 3em;
+	/*border-left: 1px;
+	border-top-right-radius: .28em;
+	border-bottom-right-radius: .28em;*/
+}
+.fechconsBusExci:focus{
+	border-color: #4caf50;
+}
+/*@media only screen and (max-width: 320px)
+
+
+@media only screen and (max-width: 640px)
+
+
+@media only screen and (max-width: 1024px)
+
+
+@media only screen and (max-width: 1440px)+/
