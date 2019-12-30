@@ -14,12 +14,17 @@ function cambiarClase(){
     let letmodalcontSubExci = document.getElementById('mdlconSubExci');
     let letabrirSubExc = document.getElementById('mdlSubExc');
     let letcerrarSubExc = document.getElementById('mdlcerSubExci');
+    let letcerrarInfExc = document.getElementById('btnCan');
 
     letabrirSubExc.addEventListener('click', function(){
         letmodaliteSubExci.style.display = 'block';
     });
 
     letcerrarSubExc.addEventListener('click', function(){
+        letmodaliteSubExci.style.display = 'none';
+    });
+
+    letcerrarInfExc.addEventListener('click', function(){
         letmodaliteSubExci.style.display = 'none';
     });
 

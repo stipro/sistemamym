@@ -376,7 +376,7 @@ try
                 $insertVen -> execute();
             }
             else{
-                echo ' Ya existe COLABORADOR';
+                //echo ' Ya existe COLABORADOR';
             }
                 break;
             case 3:
@@ -423,7 +423,7 @@ try
                 $insertVen -> execute();
             }
             else{   
-                echo ' Ya existe COLABORADOR';
+                //echo ' Ya existe COLABORADOR';
             }
                 break;
             case 4:
@@ -473,8 +473,7 @@ try
                     $insertVen -> execute();
                 }
                 else{
-
-                    echo ' Ya existe COLABORADOR';
+                    //echo ' Ya existe COLABORADOR';
                 }
                 break;
             case 5:
@@ -502,7 +501,7 @@ try
             }
         }
         else{
-            echo 'No se puede registrar, por que ya hay registros con este Mes';
+            echo ' No se puede registrar, por que ya hay registros con este Mes';
         }
     }
     elseif(empty($_POST['dataexArchivo']))
@@ -511,44 +510,6 @@ try
     }
     else{
         echo 'No se seleccionó un archivo admitido, por favor verificar el nombre del archivo';
-    }
-    $confec=0;
-    
-    //Si no esta vacia y si esta vacia, continuara
-    //&& $confec == 0
-    if (!empty($_POST['dataexArchivo']))
-    {
-        $arrayvendedor = array();
-        $duplicadosCol = 0;
-        
-        
-        //$constipven->execute();
-        //$varcotipven = $constipven->fetch(PDO::FETCH_ASSOC);
-        //var_dump($varcotipven);
-        //echo $varcotipven['tipo'].'</br>';
-        $constipven = $conexion->prepare("SELECT  id,tipo, COUNT(*) as total  FROM (SELECT NIDTIPVEN AS id, VNOMTIPVEN AS tipo FROM t00tipven)tbl_tmp GROUP BY tipo, id");// OBTENER LOS TIPOS DE VENDEDOR
-        $constipven->execute();
-        $favarcotipven = $constipven->fetchAll(PDO::FETCH_ASSOC);
-        $fvarcotipven = $constipven->fetch(PDO::FETCH_ASSOC);
-        $vnomtip = 'FARMA';
-        if(is_bool($fvarcotipven))
-        {
-            echo '
-            <div class="alerweb-reco">
-                <a href="#" class="clos" data-dismiss="alert" aria-label="close">&times;</a>
-                Si desea Puede <button id="mdliagrTipven" class="btnReg">Agregar</button>, Tipos de Vendedores.
-            </div>';
-            //var_dump($varcotipven);
-        }
-        elseif($fvarcotipven["tipo"] == $vnomtip)
-        {
-            echo 'Ya hay registro: '.$vnomtip;
-            //echo '<button id="mdliagrTipven" class="btnReg">Agregar</button>';
-            //var_dump($varcotipven);
-        }
-        else{
-            echo "hay registro";
-        } 
     }
 } 
 catch (PDOException $error) /// MENSAJE POR SI SURGE ALGÚN ERROR

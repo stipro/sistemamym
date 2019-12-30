@@ -4,12 +4,7 @@ var exArchivo1;
 var exArchivo2;
 var vnomarchext;
 var rptaRegTipo;
-//Se ejecuta la funcion cuando haiga un cambio en el input
-$("#excelFileImport").change(function(e){
-    ImportExcel()
-    $("#ckxvistExcel").removeAttr("disabled")
 
-});
 //Traemos datos de tipo de vendedor con ajax
 $.ajax({
     //indico el url donde se enviara los datos
@@ -110,6 +105,12 @@ function ImportExcel()
     }
     
 }
+//Se ejecuta la funcion cuando haiga un cambio en el input
+$("#excelFileImport").change(function(e){
+    ImportExcel()
+    $("#ckxvistExcel").removeAttr("disabled")
+
+});
 //vnomarch=document.getElementById('image1').files[0].name;
 //console.log(vnomarch);
 //selecciono el input con el id excelfile
@@ -194,45 +195,53 @@ function BindTableHeader(jsondata, tableid) {
 }
 //click en boton REGISTRAR (EXCEL)
 $('#btnReg').click(function()
-{    
-    //Recorre array y agrega valor al objeto TIPO
-    for(var i = 0; i < jsontabla.length; i++){
-        //Hacemos contar la variable con el tamaño y guardamos en una variable
-        var idrec="#idselect"+i;
-        //usamos la variable para capturar cada un select y guardamos en una variable
-        var idtip = $(idrec).val();
-        //usamos la variable para guardar el array con objetos mientrar recorremos con la i
-        jsontabla[i]["TIPO"] = idtip;
-        
-    }
-    console.log(jsontabla);
-    //Obtengo Fecha del usuario año mes dia y hora GTM automaticamente
-    var d = new Date();
-    //Obtengo solo el dia
-    var dusu = d.getDate();
-    //Concateno el dia usuario mas año y mes ingresado por usuario
-    var ifecregusuxlsx = $('#iptfreg').val()+'-'+dusu;
-    //Obtener nombre
-    var vnomarch = vnomarchext.split(".")[0];
-    //console.log(vnomarch);
-    //var nomtip = $("#idselect1 option:selected").text()
-    $.ajax({
-        //indico el url donde se enviara los datos
-        url: './../pdo/excel.php',
-        //indico el metodo de envio, puede ser GET ó Post
-        type: 'POST',
-        //indico que no se va guardar ningun tipo de informacion
-        cache:false,
-        //indicamos el dato que se va enviar// JSON.stringify convierte en texto
-        data: {'dataexArchivo': JSON.stringify(jsontabla),ifecregusuxlsx, vnomarch},
-        //contentType: "application/json; charset=utf-8",
-        //indicamos que ejecutara cuando este correc
-        success: function (data) {
-            $('#resp').html(data);
-        },
-        error: function () {
-            alert("error");
+{
+    if (jsontabla){
+        console.log('No vacio');
+            //Recorre array y agrega valor al objeto TIPO
+        for(var i = 0; i < jsontabla.length; i++){
+            //Hacemos contar la variable con el tamaño y guardamos en una variable
+            var idrec="#idselect"+i;
+            //usamos la variable para capturar cada un select y guardamos en una variable
+            var idtip = $(idrec).val();
+            //usamos la variable para guardar el array con objetos mientrar recorremos con la i
+            jsontabla[i]["TIPO"] = idtip;
+            
         }
-    });
+        console.log(jsontabla);
+        //Obtengo Fecha del usuario año mes dia y hora GTM automaticamente
+        var d = new Date();
+        //Obtengo solo el dia
+        var dusu = d.getDate();
+        //Concateno el dia usuario mas año y mes ingresado por usuario
+        var ifecregusuxlsx = $('#iptfreg').val()+'-'+dusu;
+        //Obtener nombre
+        var vnomarch = vnomarchext.split(".")[0];
+        //console.log(vnomarch);
+        //var nomtip = $("#idselect1 option:selected").text()
+        $.ajax({
+            //indico el url donde se enviara los datos
+            url: './../pdo/excel.php',
+            //indico el metodo de envio, puede ser GET ó Post
+            type: 'POST',
+            //indico que no se va guardar ningun tipo de informacion
+            cache:false,
+            //indicamos el dato que se va enviar// JSON.stringify convierte en texto
+            data: {'dataexArchivo': JSON.stringify(jsontabla),ifecregusuxlsx, vnomarch},
+            //contentType: "application/json; charset=utf-8",
+            //indicamos que ejecutara cuando este correc
+            success: function (data) {
+                $('#resp').html(data);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    else{
+        console.log('Vacio');
+
+    }
+
 });
 //Envio array de objetos por ajax
