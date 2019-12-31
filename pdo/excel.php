@@ -16,6 +16,8 @@ try
     $duplicadosCol = 0;
     //Se separa el dia mes año
     list($frdanio, $frdmes, $frddia) = explode("-",$fecusu);
+    $arrayvendedorid = [];
+    
     //Se compara el nombre del archivo
     if($vnomarch == "AVANCEVENDEDOR")
     {
@@ -23,11 +25,13 @@ try
 
         //echo $frdmes;
         //var_dump($tabla);
+        $c=0;
         foreach ($tabla as $clave) 
         {
             $vendeDato = explode(" ", $clave["VENDEDOR"]);
-            $venzon = $clave["ZONA"];
+            $venzon = trim($clave["ZONA"]);
             $ventipId = $clave["TIPO"];
+            $arrayval = [];
             //var_dump($clave["VENDEDOR"]);
             $num=count($vendeDato);
             switch ($num)
@@ -38,6 +42,8 @@ try
                 $arrayvendedor[] = ["PApellido" => $vendeDato[0], "PNombre" => $vendeDato[1]];
                 $papellido = $vendeDato[0];
                 $pnombre = $vendeDato[1];
+                $c++;
+                //echo $c;
                 //CONSULTA COLABORADOR
                 $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VPNOCOL=:pnombre AND VAPACOL=:papellido)tbl_tmp GROUP BY id");
                 $existenteCol->bindValue(':papellido',$papellido);
@@ -59,6 +65,10 @@ try
                 $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
                 $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
                 $insertVen -> execute();
+                $lastvenIdsql = $conexion->lastInsertId();
+                array_push($arrayval,$lastvenIdsql,$venzon);
+                array_push($arrayvendedorid,$arrayval);
+                unset($arrayval);
             }
             else{
                 //echo'dos palabras 2';
@@ -94,6 +104,10 @@ try
                 $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
                 $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
                 $insertVen -> execute();
+                $lastvenIdsql = $conexion->lastInsertId();
+                array_push($arrayval,$lastvenIdsql,$venzon);
+                array_push($arrayvendedorid,$arrayval);
+                unset($arrayval);
             }
             else{   
                 //echo'dos palabras 3';
@@ -131,6 +145,9 @@ try
                     $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
                     $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
                     $insertVen -> execute();
+                    $lastvenIdsql = $conexion->lastInsertId();
+                    array_push($arrayval,$lastvenIdsql,$venzon);
+                    array_push($arrayvendedorid,$arrayval);
                 }
                 else{  
                     //echo'dos palabras 4';
@@ -142,6 +159,7 @@ try
                 break;
             }
         }
+        var_dump($arrayvendedorid);
         $fregavaven = $conexion->prepare("SELECT  DISTINCT DFECREG FROM t011avavendedor WHERE MONTH(DFECREG)=:frdmes");// OBTENER FECHA RE REGISTRO XLSX
         $fregavaven->bindValue(':frdmes',$frdmes);
         $fregavaven->execute();
