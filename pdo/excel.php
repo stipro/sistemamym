@@ -540,49 +540,7 @@ if($ejecutar) // MENSAJE DE EXITO
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <body>
-         MODAL AGREGAR VENDEDOR
-        <div class="modal" id="mdliteTipven" >
-            <div class="flex" id="mdlconTipven">
-                <div class="contenido-modal">
-                    <div class="modal-header flex">
-                        <h2 class="mdlhTitu">AGREGAR TIPO (VENDEDOR)</h2>
-                        <span class="close" id="mdlceriTipven">&times;</span>
-                    </div>
-                    Contenido del Modal
-                    <div class="modal-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Descripción</th>
-                            <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        </table>
-                        <div class="contInpufc">
-                            <i class="iconInpufc icon-calendar"></i>
-                            <input id="iptfreg" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                        </div>
-                        <div class="contInpufc">
-                            <i class="iconInpufc icon-calendar"></i>
-                            <input id="iptfreg" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese Descripcion" value="">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="mdlfleft">
-                            <input id="" type="button" value="Ver Tipo" name="" id="" class="iconfootSubExci icon-eye-hidden">
-                        </div>
-                        <div class="mdlfrigh">
-                            <button id="btnCan" class="btn btnCan">Cancelar</button>
-                            <button id="btnReg" class="btn btnReg">Registrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     <script src="../asset/js/modal.js"></script>
     <script src="./../asset/js/baseJquery.js" type="text/javascript"></script>
 </body>

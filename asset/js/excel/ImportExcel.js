@@ -4,23 +4,7 @@ var exArchivo1;
 var exArchivo2;
 var vnomarchext;
 var rptaRegTipo;
-
-//Traemos datos de tipo de vendedor con ajax
-$.ajax({
-    //indico el url donde se enviara los datos
-    url: './../pdo/tipo.php',
-    //indico el metodo de envio, puede ser GET ó Post
-    success: function (rptaReg) {
-        //rptaReg.forEach(element => console.log(element));
-        //var obj = JSON.parse(text); 
-        jsrptaRegTipo = JSON.parse(rptaReg);
-        //console.log(rptaRegTipo[1]["tipo"]);
-        //console.log(jsrptaRegTipo);
-    },
-    error: function () {
-        alert("error");
-    }
-});
+var jsrptaRegTipo;
 //Convierte Excel en JSON
 function ImportExcel()
 {
@@ -105,6 +89,44 @@ function ImportExcel()
     }
     
 }
+$('#ckxvistExcel').click(function()
+{
+        //Traemos datos de tipo de vendedor con ajax
+        $.ajax({
+        //indico el url donde se enviara los datos
+        url: './../pdo/tipo.php',
+        //indico el metodo de envio, puede ser GET ó Post
+        success: function (rptaReg) {
+            //rptaReg.forEach(element => console.log(element));
+            //var obj = JSON.parse(text);
+            jsrptaRegTipo = JSON.parse(rptaReg);
+            //console.log(rptaRegTipo[1]["tipo"]);
+            console.log(jsrptaRegTipo);
+            },
+        error: function () {
+            alert("error");
+            }
+        });
+    comprueba();
+    //checkbox.addEventListener("change", comprueba, false);
+    /*function on(){
+        console.log("Hemos pulsado en on");
+      }
+      
+      function off(){
+        console.log("Hemos pulsado en off");
+      }*/
+});
+var checkbox = document.getElementById('ckxvistExcel');
+function comprueba()
+{
+  if(checkbox.checked){
+    BindTable(jsontabla, '#exceltable');
+    $('#exceltable').show();
+  }else{
+    $("#exceltable").empty();
+  }
+}
 //Se ejecuta la funcion cuando haiga un cambio en el input
 $("#excelFileImport").change(function(e){
     ImportExcel()
@@ -132,8 +154,7 @@ function BindTable(jsondata, tableid) {//Function used to convert the JSON array
      cont = 1;
      var bodytable$ = $('<tbody/>').addClass( "tbe-body" );
      var opttip$;
-     
-     
+
     //console.log(objtipoven);
      for (var i = 0; i < jsondata.length; i++) {  
          var row$ = $('<tr/>').addClass( "group-tbe-body" );
@@ -144,6 +165,16 @@ function BindTable(jsondata, tableid) {//Function used to convert the JSON array
             //console.log(cellValue);
             if (cellValue === "") {
                 //console.log(rptaRegTipo);
+                console.log(jsrptaRegTipo);
+                
+                if(jsrptaRegTipo){
+                    console.log('vacio');
+                    let letaletipvenvacio = document.getElementById('aletipvenvacio');
+                    letaletipvenvacio.style.display = 'block';
+                }
+                else{
+                    console.log('lleno');
+                }
                 for (var c = 0; c < jsrptaRegTipo.length; c++) {
                     //console.log(jsrptaRegTipo[i]["tipo"]);
                     objtipoven = jsrptaRegTipo[c]["tipo"];

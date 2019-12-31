@@ -1,4 +1,5 @@
 <?php
+
 /*
  session_start();
  if(empty($_SESSION['nombre_usuario']))
@@ -17,12 +18,16 @@
         <script src="./../asset/js/jquery-3.4.1.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.7.7/xlsx.core.min.js"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xls/0.7.4-a/xls.core.min.js"></script>
+        <link rel="stylesheet" href="../asset/css/noti.css">
         <link rel="stylesheet" href="../asset/icon/icon.css"><!--font-->
         <link rel="stylesheet" href="../asset/css/modal.css">
         <link rel="stylesheet" href="../asset/css/view.css">
         <link rel="stylesheet" href="../asset/css/base.css">
         <link rel="stylesheet" href="../asset/css/tabla.css">
+        
     </head>
+    <?php include('tipven.php');
+    ?>
     <body>
         <header class="grupBarra">
             <ul id="grupContBarra" class="grupContBarra">
@@ -172,6 +177,12 @@
                             </form>  
                         </label>
                         <label id="fichero" for="exfi2" class="letSubExc">Importar Archivo</label>
+                        <div id="aletipvenvacio" class="alerweb-erro" style="display:none">
+                            <a href="#" class="clos" data-dismiss="alert" aria-label="close">&times;</a>
+                            No se puede mostrar excel, <strong class="letrimpo">No hay datos en Tipos para Vendedor</strong>, Por favor, Registre Datos.
+                            <button id="mdliagrTipven" class="btnReg">Tipo Vendedor</button>
+                        </div>
+
                         <div class="cont-exceltable">
                             <table id="exceltable" class="excel-tabla"></table>
                         </div>
@@ -196,6 +207,7 @@
                 </div>
             </div>
         </div>
+
         <!-- MODAL MODIFICACION VENDEDOR-->
         <!--Resize-->
         <div id="cuadro" class="estiloCuadro">
