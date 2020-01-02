@@ -259,6 +259,7 @@ try
             }
         }
         //var_dump($arrayvendedorid);
+
         $fregavaven = $conexion->prepare("SELECT  DISTINCT DFECREG FROM t011avavendedor WHERE MONTH(DFECREG)=:frdmes");// OBTENER FECHA RE REGISTRO XLSX
         $fregavaven->bindValue(':frdmes',$frdmes);
         $fregavaven->execute();
