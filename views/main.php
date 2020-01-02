@@ -1,5 +1,4 @@
 <?php
-
 /*
  session_start();
  if(empty($_SESSION['nombre_usuario']))
@@ -207,7 +206,6 @@
                 </div>
             </div>
         </div>
-
         <!-- MODAL MODIFICACION VENDEDOR-->
         <!--Resize-->
         <div id="cuadro" class="estiloCuadro">
@@ -215,8 +213,10 @@
                 <h1 class="letrCerrMdl">MODULO DE COMISIONES</h1>
                 <span class="iconCerrMdl icon-cross"></span>
             </header>
-            <div></div>
-            <div></div>
+        </div>
+        <!--MODALS-->
+        <div id="Modals">
+        </div>
             Arrastra con el ratón<br>para mover este cuadro</div>
         <script src="./../asset/js/modal.js" type="text/javascript"></script>
         <script src="./../asset/js/excel/ImportExcel.js" type="text/javascript"></script>
