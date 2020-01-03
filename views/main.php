@@ -197,6 +197,7 @@
                     <div class="modal-footer">
                         <div class="mdlfleft">
                             <input id="ckxvistExcel" type="checkbox" name="" id="" class="iconfootSubExci icon-eye-hidden" disabled>
+                            <button disabled>Subir Archivo</button>
                         </div>
                         <div class="mdlfrigh">
                             <button id="btnCan" class="btn btnCan">Cancelar</button>

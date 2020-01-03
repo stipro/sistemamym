@@ -38,9 +38,14 @@
                         </tbody>
                     </table>
                     </div>
-                    <div class="footer">                           
-                        <button id="btnVSAchivoscancelar" class="btn btnCan">Cancelar</button>
-                        <button id="btnVSAchivosconfirmar"class="btn btnReg">Registrar</button>
+                    <div class="modal-footer">
+                        <div class="mdlfleft">
+                            <button id="btnAchivossubir" class="btn btnReg">Subir Archivo</button>
+                        </div>
+                        <div class="mdlfrigh">
+                            <button id="btnVSAchivoscancelar" class="btn btnCan">Cancelar</button>
+                            <button id="btnVSAchivosconfirmar" class="btn btnReg">Registrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
