@@ -198,6 +198,8 @@
                         <div class="mdlfleft">
                             <input id="ckxvistExcel" type="checkbox" name="" id="" class="iconfootSubExci icon-eye-hidden" disabled>
                             <button disabled>Subir Archivo</button>
+                            <span class="herrElemModu icon-printer" id=""></span>
+                            <span class="herrElemModu icon-eye" id="mdlVisImp"></span>
                         </div>
                         <div class="mdlfrigh">
                             <button id="btnCan" class="btn btnCan">Cancelar</button>

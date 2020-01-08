@@ -72,7 +72,6 @@ while ($archivo = readdir($directorio)) //obtenemos un archivo y luego otro suce
     closedir($directorio);
 }*/
 $directorio = opendir("../archivos");//ruta actual
-$cdi=0;
     $vmvsarchivos = '
     <!-- MODAL VISUALIZACION CARPETA-->
     <div id="MdlCtdrVSArchivos" class="modal">
@@ -83,7 +82,7 @@ $cdi=0;
                     <span class="close" id="closeCarpeta">&times;</span>
                 </div>
                 <!--Contido del Modal-->
-                <div class="modal-body" style="overflow:auto;">
+                <div class="modal-body">
                     <table class="table-arch-subi">
                         <thead>
                             <tr>
@@ -97,37 +96,39 @@ $cdi=0;
                         </thead>
                         <tbody>
                            '; while ($archivo = readdir($directorio)){ 
-                              $cdi++;
                               $vmvsarchivos .='
                               <tr>
-                                <th scope="row">'.$cdi.'</th>
-                                    '; 
+                                <th scope="row">xD</th>
+                                    <td>';
                                     if(is_dir($archivo))//verificamos si es o no un directorio
                                     { 
-                                       $vmvsarchivos .='<td>['.$archivo .']</td><td></td><td></td>'; //de ser un directorio lo envolvemos entre corchetes
+                                       $vmvsarchivos .='['.$archivo .']'; //de ser un directorio lo envolvemos entre corchetes
                                     }
                                     else
                                     {
-                                       $tamarchivos = filesize("../archivos/".$archivo);
-                                       $vmvsarchivos .='<td>'.$archivo .'</td>';
-                                       $vmvsarchivos .='<td>['.$tamarchivos.']</td>';
-                                       $vmvsarchivos .='<td>'.date ("m/d/y H:i:s.", filemtime("../archivos/".$archivo)).'</td>';                                      
+                                       $vmvsarchivos .=' '.$archivo .' ';
+                                      $tamarchivos = filesize("../archivos/".$archivo);
+                                      $vmvsarchivos .='última modificación '; date ("m/d/y H:i:s.", filemtime("../archivos/".$archivo));
+                                      $vmvsarchivos .='Tamaño ['.$tamarchivos.'] ';
+                                      
                                       //var_dump($archivo)."<br />";
                                     }
                                     //closedir($directorio); 
                                     $vmvsarchivos .='
-                                    <td><a title="Descargar Archivo" href="subidas/" style="color: blue; font-size:18px;"> <span class="icon-download" aria-hidden="true"></span> </a></td>
-                                    <td><a title="Eliminar Archivo" style="color: red; font-size:18px;"> <span class="icon-bin" aria-hidden="true"></span> </a></td>
+                                    </td>
+                                    </td>
+                                    <td></td>
+                                    <td><a title="Descargar Archivo" href="subidas/" style="color: blue; font-size:18px;"> <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span> </a></td>
+                                    <td><a title="Eliminar Archivo" style="color: red; font-size:18px;" onclick=""> <span class="icon-bin" aria-hidden="true"></span> </a></td>
                                 </th>
                             </tr>
-                            ';} $vmvsarchivos .='
+                            ';}'
                         </tbody>
                     </table>
                     </div>
                     <div class="modal-footer">
                         <div class="mdlfleft">
                             <button id="btnAchivossubir" class="btn btnReg">Subir Archivo</button>
-                            <progress value="70" max="100"></progress>
                         </div>
                         <div class="mdlfrigh">
                             <button id="btnVSAchivoscancelar" class="btn btnCan">Cancelar</button>

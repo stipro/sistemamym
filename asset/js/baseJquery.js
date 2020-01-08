@@ -44,7 +44,7 @@ $(document).ready(function(){
         //var nomtip = $("#idselect1 option:selected").text()
         $.ajax({
             //indico el url donde se enviara los datos
-            url: './../views/mvsarchivos.php',
+            url: './../pdo/mostrarArchivos.php',
             //indico el metodo de envio, puede ser GET ó Post
             type: 'POST',
             //indico que no se va guardar ningun tipo de informacion
