@@ -149,7 +149,7 @@
             <div class="herModu">
                 <span class="herrElemModu icon-cloud-upload" id="mdlSubExc"></span>
                 <span class="herrElemModu icon-eye" id="mdlVisImp"></span>
-                <span class="herrElemModu icon-printer" id=""></span>
+                <!--<span class="herrElemModu icon-printer" id=""></span>-->
                 <span class="herrElemModu icon-folder-upload" id="mdlVisArch"></span>
             </div>
         </div>
@@ -195,11 +195,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <progress id="pgssubirAhs" class="pgssubirAhs" value="0" max="100"></progress>
                         <div class="mdlfleft">
                             <input id="ckxvistExcel" type="checkbox" name="" id="" class="iconfootSubExci icon-eye-hidden" disabled>
-                            <button disabled>Subir Archivo</button>
-                            <span class="herrElemModu icon-printer" id=""></span>
-                            <span class="herrElemModu icon-eye" id="mdlVisImp"></span>
+                            <button id="btnsubirAhs">Subir Archivo</button>
                         </div>
                         <div class="mdlfrigh">
                             <button id="btnCan" class="btn btnCan">Cancelar</button>

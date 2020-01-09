@@ -67,4 +67,71 @@ $(document).ready(function(){
         console.log('Btn cancelar');
         $("#MdlCtdrVSArchivos").css("display", "none");
     });
+    //Subir Archivos >> https://gist.github.com/umidjons/6173837
+    $( '#btnsubirAhs' ).on( 'click', function ()
+    {
+        //Obtengo Fecha del usuario año mes dia y hora GTM automaticamente
+        var d = new Date();
+        //Obtengo solo el dia
+        var dusu = d.getDate();
+        //Concateno el dia usuario mas año y mes ingresado por usuario
+        var ifecregusuxlsx = $('#iptfreg').val()+'-'+dusu;
+        var file = $( '#excelFileImport' ).get( 0 ).files[0],
+        formData = new FormData();
+        
+        //partarchi.append( 'file', file );
+        
+        formData.append( 'file', file );
+        formData.append( 'ifecregusuxlsx', ifecregusuxlsx );
+        //formData.append( ifecregusuxlsx );
+        console.log( formData );
+        $.ajax( {
+            url        : './../pdo/subirArchivos.php',
+            type       : 'POST',
+            contentType: false,
+            cache      : false,
+            processData: false,
+            data       : formData,//formData,ifecregusuxlsx,
+            xhr        : function ()
+            {
+                var jqXHR = null;
+                if ( window.ActiveXObject )
+                {
+                    jqXHR = new window.ActiveXObject( "Microsoft.XMLHTTP" );
+                }
+                else
+                {
+                    jqXHR = new window.XMLHttpRequest();
+                }
+                //Upload progress
+                jqXHR.upload.addEventListener( "progress", function ( evt )
+                {
+                        if ( evt.lengthComputable )
+                        {
+                            var percentComplete = Math.round( (evt.loaded * 100) / evt.total );
+                            //Do something with upload progress
+                            console.log( 'Porcentaje Subida', percentComplete );
+                            $("#pgssubirAhs").attr("value",percentComplete);
+                        }
+                    }, false );
+                    //Download progress
+                    jqXHR.addEventListener( "progress", function ( evt )
+                    {
+                        if ( evt.lengthComputable )
+                        {
+                            var percentComplete = Math.round( (evt.loaded * 100) / evt.total );
+                            //Do something with download progress
+                            console.log( 'Porcentaje Descargada', percentComplete );
+                        }
+                    }, false );
+                    return jqXHR;
+                },
+            success    : function ( data )
+            {
+                //Do something success-ish
+                console.log( 'Completed.' );
+            }
+        } );
+    } );
+    ///
 });

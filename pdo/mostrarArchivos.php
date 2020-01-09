@@ -126,8 +126,6 @@ $cdi=0;
                     </div>
                     <div class="modal-footer">
                         <div class="mdlfleft">
-                            <button id="btnAchivossubir" class="btn btnReg">Subir Archivo</button>
-                            <progress value="70" max="100"></progress>
                         </div>
                         <div class="mdlfrigh">
                             <button id="btnVSAchivoscancelar" class="btn btnCan">Cancelar</button>

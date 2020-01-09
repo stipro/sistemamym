@@ -91,22 +91,33 @@ function ImportExcel()
 }
 $('#ckxvistExcel').click(function()
 {
+    if(jsrptaRegTipo.length == 0)
+    {
         //Traemos datos de tipo de vendedor con ajax
         $.ajax({
-        //indico el url donde se enviara los datos
-        url: './../pdo/tipo.php',
-        //indico el metodo de envio, puede ser GET ó Post
-        success: function (rptaReg) {
+            //indico el url donde se enviara los datos
+            url: './../pdo/tipo.php',
+            //indico el metodo de envio, puede ser GET ó Post
+            success: function (rptaReg) {
             //rptaReg.forEach(element => console.log(element));
             //var obj = JSON.parse(text);
             jsrptaRegTipo = JSON.parse(rptaReg);
             //console.log(rptaRegTipo[1]["tipo"]);
             console.log(jsrptaRegTipo);
             },
-        error: function () {
-            alert("error");
+            error: function () {
+                alert("error");
             }
         });
+        console.log(jsrptaRegTipo);
+    }
+    else{
+        console.log('Lleno');
+        $("#aletipvenvacio").removeAttr("style");
+        //$("#aletipvenvacio").attr("display","none");
+        $("#aletipvenvacio").css({'display':'none'});
+        //$("#aletipvenvacio").empty();
+    }
     comprueba();
     //checkbox.addEventListener("change", comprueba, false);
     /*function on(){
@@ -129,8 +140,25 @@ function comprueba()
 }
 //Se ejecuta la funcion cuando haiga un cambio en el input
 $("#excelFileImport").change(function(e){
+    //Traemos datos de tipo de vendedor con ajax
+    $.ajax({
+        //indico el url donde se enviara los datos
+        url: './../pdo/tipo.php',
+        //indico el metodo de envio, puede ser GET ó Post
+        success: function (rptaReg) {
+        //rptaReg.forEach(element => console.log(element));
+        //var obj = JSON.parse(text);
+        jsrptaRegTipo = JSON.parse(rptaReg);
+        //console.log(rptaRegTipo[1]["tipo"]);
+        console.log(jsrptaRegTipo);
+        },
+        error: function () {
+            alert("error");
+        }
+    });
     ImportExcel()
-    $("#ckxvistExcel").removeAttr("disabled")
+    
+    $("#ckxvistExcel").removeAttr("disabled");
 
 });
 //vnomarch=document.getElementById('image1').files[0].name;
@@ -165,22 +193,24 @@ function BindTable(jsondata, tableid) {//Function used to convert the JSON array
             //console.log(cellValue);
             if (cellValue === "") {
                 //console.log(rptaRegTipo);
-                console.log(jsrptaRegTipo);
-                
-                if(jsrptaRegTipo){
+                //console.log(jsrptaRegTipo);
+                if(jsrptaRegTipo.length == 0){
                     console.log('vacio');
                     let letaletipvenvacio = document.getElementById('aletipvenvacio');
                     letaletipvenvacio.style.display = 'block';
+                    //console.log(jsrptaRegTipo);
                 }
                 else{
                     console.log('lleno');
+                    console.log(jsrptaRegTipo);
+                    for (var c = 0; c < jsrptaRegTipo.length; c++) {
+                        //console.log(jsrptaRegTipo[i]["tipo"]);
+                        objtipoven = jsrptaRegTipo[c]["tipo"];
+                        objidtipoven = jsrptaRegTipo[c]["id"];
+                        tipselec$.append($('<option/>').attr("id","fila"+i).attr("value",objidtipoven).html(objtipoven));
+                    }
                 }
-                for (var c = 0; c < jsrptaRegTipo.length; c++) {
-                    //console.log(jsrptaRegTipo[i]["tipo"]);
-                    objtipoven = jsrptaRegTipo[c]["tipo"];
-                    objidtipoven = jsrptaRegTipo[c]["id"];
-                    tipselec$.append($('<option/>').attr("id","fila"+i).attr("value",objidtipoven).html(objtipoven));
-                }
+
                 //console.log(i);
                 row$.append(tipselec$);
                 //row$.append($('<select/>').html(cellValue));
