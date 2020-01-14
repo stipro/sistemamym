@@ -63,6 +63,12 @@ function ImportExcel()
                         //console.log(exceljson);   
                         cnt++;
                         jsontabla = exceljson;
+                        console.log(jsontabla);
+                        cadena = "TIPO";
+                        for(var i = 0; i < jsontabla.length; i++){
+                            jsontabla[i][cadena]  = " ";                            
+                        }
+                        console.log(jsontabla)
                     }  
                 });
                 //Visualizo la tabla
@@ -86,8 +92,7 @@ function ImportExcel()
     else 
     {
         console.log("Please upload a valid Excel file");
-    }
-    
+    }    
 }
 $('#ckxvistExcel').click(function()
 {
@@ -191,7 +196,8 @@ function BindTable(jsondata, tableid) {//Function used to convert the JSON array
             cellValue = jsondata[i][columns[colIndex]];
             var tipselec$ = $('<select/>').addClass( "select"+i ).attr("id","idselect"+i);
             //console.log(cellValue);
-            if (cellValue === "") {
+            if (cellValue === " ") {
+                console.log('vacio var');
                 //console.log(rptaRegTipo);
                 //console.log(jsrptaRegTipo);
                 if(jsrptaRegTipo.length == 0){
@@ -216,6 +222,7 @@ function BindTable(jsondata, tableid) {//Function used to convert the JSON array
                 //row$.append($('<select/>').html(cellValue));
             }
             else{
+                console.log('No vacio var');
                 row$.append($('<td/>').addClass( "tbe-body-ele body"+cont ).html(cellValue));
             }
             
@@ -233,9 +240,9 @@ function BindTableHeader(jsondata, tableid) {
     var columnSet = [];
     var thead$ = $('<thead/>').addClass( "tbe-heah" );
     var headerTr$ = $('<tr/>').addClass( "group-tbe-head" );
-    cadena = "TIPO";
+    //cadena = "TIPO";
     for (var i = 0; i < jsondata.length; i++) {
-        jsondata[i][cadena]  = "";
+        //jsondata[i][cadena]  = "";
         var rowHash = jsondata[i];
         for (var key in rowHash) {
             if (rowHash.hasOwnProperty(key)) {
@@ -246,11 +253,13 @@ function BindTableHeader(jsondata, tableid) {
                     headerTr$.append($('<th/>').addClass( "tbe-heah-ele head-"+cont).html(key));
                     //console.log(key);
                     cont = cont+1;
+
                 }  
             }
         }
-    } 
-    thead$.append(headerTr$)
+    }
+    console.log(jsondata);
+    thead$.append(headerTr$);
     $(tableid).append(thead$);  
     return columnSet;  
 }
@@ -258,15 +267,23 @@ function BindTableHeader(jsondata, tableid) {
 $('#btnReg').click(function()
 {
     if (jsontabla){
-        console.log('No vacio');
-            //Recorre array y agrega valor al objeto TIPO
+        //Recorre array y agrega valor al objeto TIPO
         for(var i = 0; i < jsontabla.length; i++){
             //Hacemos contar la variable con el tamaño y guardamos en una variable
             var idrec="#idselect"+i;
             //usamos la variable para capturar cada un select y guardamos en una variable
             var idtip = $(idrec).val();
-            //usamos la variable para guardar el array con objetos mientrar recorremos con la i
-            jsontabla[i]["TIPO"] = idtip;
+            console.log(idtip);
+            if(typeof idtip === "undefined"){
+                console.log('vacio');
+                jsontabla[i]["TIPO"] = ' ';
+            }
+            else{
+                console.log('no vacio');
+                //usamos la variable para guardar el array con objetos mientrar recorremos con la i
+                jsontabla[i]["TIPO"] = idtip;
+            }
+            
             
         }
         console.log(jsontabla);
@@ -300,7 +317,7 @@ $('#btnReg').click(function()
         });
     }
     else{
-        console.log('Vacio');
+        console.log('Excel no Seleccionado');
 
     }
 

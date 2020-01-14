@@ -147,10 +147,12 @@
                 </div>
             </div>
             <div class="herModu">
+                <!-- id[ mdl(modal), Mod(Accion)]-->
                 <span class="herrElemModu icon-cloud-upload" id="mdlSubExc"></span>
-                <span class="herrElemModu icon-eye" id="mdlVisImp"></span>
+                <span class="herrElemModu icon-eye" id=""></span>
                 <!--<span class="herrElemModu icon-printer" id=""></span>-->
-                <span class="herrElemModu icon-folder-upload" id="mdlVisArch"></span>
+                <span class="herrElemModu icon-folder-upload" id="mdlVisImp"></span>
+                <span class="herrElemModu icon-pencil" id="mdlVenMod"></span>
             </div>
         </div>
         <!-- MODAL SUBIR EXCEL-->

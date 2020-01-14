@@ -84,7 +84,8 @@ $cdi=0;
                 </div>
                 <!--Contido del Modal-->
                 <div class="modal-body" style="overflow:auto;">
-                    <table class="table-arch-subi">
+                    <div class="cont-exceltable">
+                        <table class="table-arch-subi">
                         <thead>
                             <tr>
                                 <th width="7%">#</th>
@@ -96,33 +97,34 @@ $cdi=0;
                             </tr>
                         </thead>
                         <tbody>
-                           '; while ($archivo = readdir($directorio)){ 
-                              $cdi++;
-                              $vmvsarchivos .='
-                              <tr>
+                        '; while ($archivo = readdir($directorio)){ 
+                            $cdi++;
+                            $vmvsarchivos .='
+                            <tr>
                                 <th scope="row">'.$cdi.'</th>
                                     '; 
                                     if(is_dir($archivo))//verificamos si es o no un directorio
                                     { 
-                                       $vmvsarchivos .='<td>['.$archivo .']</td><td></td><td></td>'; //de ser un directorio lo envolvemos entre corchetes
+                                        $vmvsarchivos .='<td>['.$archivo .']</td><td></td><td></td>'; //de ser un directorio lo envolvemos entre corchetes
                                     }
                                     else
                                     {
-                                       $tamarchivos = filesize("../archivos/".$archivo);
-                                       $vmvsarchivos .='<td>'.$archivo .'</td>';
-                                       $vmvsarchivos .='<td>['.$tamarchivos.']</td>';
-                                       $vmvsarchivos .='<td>'.date ("m/d/y H:i:s.", filemtime("../archivos/".$archivo)).'</td>';                                      
-                                      //var_dump($archivo)."<br />";
+                                        $tamarchivos = filesize("../archivos/".$archivo);
+                                        $vmvsarchivos .='<td>'.$archivo .'</td>';
+                                        $vmvsarchivos .='<td>['.$tamarchivos.']</td>';
+                                        $vmvsarchivos .='<td>'.date ("m/d/y H:i:s.", filemtime("../archivos/".$archivo)).'</td>';
+                                        $vmvsarchivos .='<td><a title="Descargar Archivo" href="subidas/" style="color: blue; font-size:18px;"> <span class="icon-download" aria-hidden="true"></span> </a></td>
+                                                         <td><a title="Eliminar Archivo" style="color: red; font-size:18px;"> <span class="icon-bin" aria-hidden="true"></span> </a></td>';                                    
+                                        //var_dump($archivo)."<br />";
                                     }
                                     //closedir($directorio); 
                                     $vmvsarchivos .='
-                                    <td><a title="Descargar Archivo" href="subidas/" style="color: blue; font-size:18px;"> <span class="icon-download" aria-hidden="true"></span> </a></td>
-                                    <td><a title="Eliminar Archivo" style="color: red; font-size:18px;"> <span class="icon-bin" aria-hidden="true"></span> </a></td>
                                 </th>
                             </tr>
                             ';} $vmvsarchivos .='
                         </tbody>
                     </table>
+                    </div>
                     </div>
                     <div class="modal-footer">
                         <div class="mdlfleft">

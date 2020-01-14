@@ -60,7 +60,7 @@ $(document).ready(function(){
             error: function () {
                 alert("error");
             }
-        });       
+        });
     });
     //Cerrar Modal
     $('#btnVSAchivoscancelar').click(function(){
@@ -134,4 +134,31 @@ $(document).ready(function(){
         } );
     } );
     ///
+    //Cerrar Modal
+    $('#mdlVenMod').click(function(){
+        $.ajax({
+            //indico el url donde se enviara los datos
+            url: './../pdo/modificar.php',
+            //indico el metodo de envio, puede ser GET ó Post
+            type: 'POST',
+            //indico que no se va guardar ningun tipo de informacion
+            cache:false,
+            //indicamos el dato que se va enviar// JSON.stringify convierte en texto
+            data: {},
+            //contentType: "application/json; charset=utf-8",
+            //indicamos que ejecutara cuando este correc
+            success: function (data) {
+                $('#Modals').html(data);
+                $("#mdlVendModi").css("display", "block");
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    });
+        //Cerrar Modal MODAL MODIFICAR
+        $('#mdlVendModicancelar').click(function(){
+            console.log('Modificacion Vendedor');
+            $("#mdlVendModi").css("display", "none");
+        });
 });

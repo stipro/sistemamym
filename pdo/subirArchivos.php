@@ -11,11 +11,11 @@ var_dump($ifecregusuxlsx);
 $target_path = $uploads_dir . $archivo;
 if ( move_uploaded_file( $_FILES[ 'file' ][ 'tmp_name' ], $target_path ) )
 {
-    echo 'File uploaded: ' . $target_path;
+    echo 'Archivo subido: ' . $target_path;
 }
 else
 {
-    echo 'Error in uploading file ' . $target_path;
+    echo 'Error al cargar el archivo ' . $target_path;
 }
 ///
 /*
