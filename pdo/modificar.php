@@ -1,7 +1,10 @@
 <?php
-include('../db/conexionPDO.php');
-//
-$qcol = $conexion->prepare("SELECT * FROM t002col");// OBTENER INFORMACIÓN DE USUARIO
+include('./../db/conexionPDO.php');
+//SELECT * FROM t002col
+$qcol = $conexion->prepare("SELECT a.*, b.NIDVEN
+                            FROM t002col a
+                            INNER JOIN t00ven b
+                            ON a.NIDCOL = b.FIDCOL");// OBTENER INFORMACIÓN DE USUARIO
 //$qcol->setFetchMode(PDO::FETCH_ASSOC);
 $qcol->execute();
 // v(VARIABLE),m(MODAL), modi(ACCIÓN),
@@ -20,14 +23,13 @@ $vmmvendmodi='
             </div>
             <!--Contido del Modal-->
             <div class="modal-body" style="overflow:auto;">
-                <div>
                 <div class="contInpufc">
                 <label>Vendedor</label>
                 <select name="venMod" id="venMod">
                     <option value="" selected>Elige una Opción</option>';
                 while ($mqcol = $qcol->fetch(PDO::FETCH_ASSOC)) 
                 {
-                    $vmmvendmodi.='<option data-value="'.$mqcol["NIDCOL"].'" value="'.$mqcol["NIDCOL"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].'</option>';
+                    $vmmvendmodi.='<option data-value="'.$mqcol["NIDVEN"].'" value="'.$mqcol["NIDVEN"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].'</option>';
                 }
                 $vmmvendmodi.='</select>
                     <!--<select>
@@ -43,52 +45,53 @@ $vmmvendmodi='
                 </div>
                 <div class="contInpufc">
                     <i class="iconInpufc icon-calendar"></i>
-                    <input class="imesven" type="month" name="mes" step="1" min="2015-12" max="2020-12" value="2019-01" >
+                    <input id="iptvendat" class="fechconsBusExci"  type="month" name="mes" step="1" min="2015-12" max="2020-12" value="2019-01" >
                 </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-coin-dollar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                </div>
+                <div id="resvenDato">
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptnvenbru" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptnnetcre" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptnvennet" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptncuota" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptnporcen" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptntotcli" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptncobert" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptncobrad" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptntipcob" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptnmorosi" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-coin-dollar"></i>
+                        <input id="iptnmoroso" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -104,32 +107,68 @@ $vmmvendmodi='
 </div>
 <script>
 $("select#venMod").on("change",function(){
-    var vvenid = $(this).val();
-    alert(vvenid);
-});
-$("#mdlVendModiconfirmar").click(function(){
-    var fecha = $("iptvendat").val();
-    //var fecha = $(".imesven").val();
-    //var zona = $(this).data("value");
-    alert("Eligio Zona: ..."+fecha);
-    /*var vendedor = {
-        "zona" : zona,
+    var idven = $(this).val();
+    var fecha = $("#iptvendat").val();
+    var vendedor = {
+        "idven" : idven,
         "fecha" : fecha,
-};
-    alert("Eligio Zona: "+zona+"Fecha: "+fecha)
+    };
     $.ajax({
         type: "POST",
         dataType: "html",
-        url: "./cargardato.php",
+        url: "./../pdo/venCargardato.php",
         data: vendedor,
         beforeSend: function () {
-            $("#respuesta").html("Procesando, espere por favor...");
+            $("#resvenDato").html("Procesando, espere por favor...");
         },
         success: function(data){
-            $("#respuesta").html(data);
+            $("#resvenDato").html(data);
         }
     });
-    */
+});
+$("#mdlVendModiconfirmar").click(function(){
+    var idven = $("#venMod option:selected").val();
+    // ---- ///
+    var nvenbru = $("#iptnvenbru").val();
+    var nnetcre = $("#iptnnetcre").val();
+    var nvennet = $("#iptnvennet").val();
+    var ncuota = $("#iptncuota").val();
+    var nporcen = $("#iptnporcen").val();
+    var ntotcli = $("#iptntotcli").val();
+    var ncobert = $("#iptncobert").val();
+    var ncobrad = $("#iptncobrad").val();
+    var ntipcob = $("#iptntipcob").val();
+    var nmorosi = $("#iptnmorosi").val();
+    var nmoroso = $("#iptnmoroso").val();
+
+    //var zona = $(this).data("value");
+    //alert("Eligio Zona: "+zona+"con la fecha: "+fecha);
+    var vendedor = {
+        "idven" : idven,
+        "nvenbru" : nvenbru,
+        "nnetcre" : nnetcre,
+        "nvennet" : nvennet,
+        "ncuota" : ncuota,
+        "nporcen" : nporcen,
+        "ntotcli" : ntotcli,
+        "ncobert" : ncobert,
+        "ncobrad" : ncobrad,
+        "ntipcob" : ntipcob,
+        "nmorosi" : nmorosi,
+        "nmoroso" : nmoroso,
+    };
+    $.ajax({
+        type: "POST",
+        dataType: "html",
+        url: "./../pdo/venActulizado.php",
+        data: vendedor,
+        beforeSend: function () {
+            $("#resvenDato").html("Procesando, espere por favor...");
+        },
+        success: function(data){
+            $("#resvenDato").html(data);
+        }
+    });
 });
 </script>';
 echo $vmmvendmodi;
