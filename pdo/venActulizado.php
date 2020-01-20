@@ -13,7 +13,7 @@
     $nmorosi = $_POST['nmorosi'];
     $nmoroso = $_POST['nmoroso'];
 
-    $actualizarVen = $conexion->prepare("UPDATE t011avavendedor SET NVENBRU = :nvenbru, NNETCRE = :nnetcre, NVENNET = :nvennet, NCUOTA = :ncuota, NPORCEN = :nporcen, NTOTCLI = :ntotcli, NCOBERT = :ncobert, NCOBRAD = :ncobrad NTIPCOB = :ntipcob, NMOROSI = :nmorosi, NMOROSO = :nmoroso WHERE FIDVEN=:idven");
+    $actualizarVen = $conexion->prepare("UPDATE t011avavendedor SET NVENBRU = :nvenbru, NNETCRE = :nnetcre, NVENNET = :nvennet, NCUOTA = :ncuota, NPORCEN = :nporcen, NTOTCLI = :ntotcli, NCOBERT = :ncobert, NCOBRAD = :ncobrad, NTIPCOB = :ntipcob, NMOROSI = :nmorosi, NMOROSO = :nmoroso WHERE FIDVEN = :idven");
     $actualizarVen->bindParam(':nvenbru', $nvenbru, PDO::PARAM_STR);
     $actualizarVen->bindParam(':nnetcre', $nnetcre, PDO::PARAM_STR);
     $actualizarVen->bindParam(':nvennet', $nvennet, PDO::PARAM_STR);
@@ -26,5 +26,9 @@
     $actualizarVen->bindParam(':nmorosi', $nmorosi, PDO::PARAM_STR);
     $actualizarVen->bindParam(':nmoroso', $nmoroso, PDO::PARAM_STR);
     $actualizarVen->bindParam(':idven', $idven, PDO::PARAM_INT);
-    $actualizarVen->execute();
+    $profin = $actualizarVen->execute();
+    if($profin)
+    {
+        echo'Se hizo el registro correctamente :D';
+    }
 ?>
