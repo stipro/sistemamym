@@ -7,8 +7,7 @@
     //var_dump($fechsele);
     //echo 'Fecha: '.$fechsele;
     //$cbbselecvenfar = $conexion->prepare("SELECT zona, vendedor, v_bruta,  n_credito, v_neta, cuota, porcentaje, t_clientes, cobertura, cobrado, t_x_cobrar, morosidad, moroso, fecha FROM `comisiones_mym`.`avavendedor` WHERE `zona`=:vendesele AND date_format(`fecha`, '%Y%m')='201906'");
-    $cbbselecvenfar = $conexion->prepare("
-    SELECT b.*
+    $cbbselecvenfar = $conexion->prepare("SELECT b.*
     FROM t00ven a 
     INNER JOIN t011avavendedor b
     ON a.NIDVEN = b.FIDVEN

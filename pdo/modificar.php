@@ -29,7 +29,7 @@ $vmmvendmodi='
                     <option value="" selected>Elige una Opción</option>';
                 while ($mqcol = $qcol->fetch(PDO::FETCH_ASSOC)) 
                 {
-                    $vmmvendmodi.='<option data-value="'.$mqcol["NIDVEN"].'" value="'.$mqcol["NIDVEN"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].'</option>';
+                    $vmmvendmodi.='<option data-value="'.$mqcol["NIDVEN"].'" value="'.$mqcol["NIDVEN"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].' '.$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].'</option>';
                 }
                 $vmmvendmodi.='</select>
                     <!--<select>

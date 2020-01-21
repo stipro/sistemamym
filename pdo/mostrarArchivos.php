@@ -97,7 +97,7 @@ $cdi=0;
                             </tr>
                         </thead>
                         <tbody>
-                        '; while ($archivo = readdir($directorio)){ 
+                        '; while ($archivo = readdir($directorio)){
                             $cdi++;
                             $vmvsarchivos .='
                             <tr>
@@ -109,8 +109,19 @@ $cdi=0;
                                     }
                                     else
                                     {
+                                        $tiparchivos = filetype("../archivos/".$archivo);
                                         $tamarchivos = filesize("../archivos/".$archivo);
-                                        $vmvsarchivos .='<td>'.$archivo .'</td>';
+                                        //var_dump($tiparchivos);
+                                        if($tiparchivos == 'dir'){
+                                            $carpeta = scandir("../archivos/".$archivo);
+                                            //var_dump($carpeta);                                          
+                                            $couarchivo = count($carpeta);
+                                            $vmvsarchivos .='<td><a href="#">'.$archivo.'</a></td>';
+                                        }
+                                        else{
+                                            $vmvsarchivos .='<td>'.$archivo .'</td>';
+                                        }
+                                        
                                         $vmvsarchivos .='<td>['.$tamarchivos.']</td>';
                                         $vmvsarchivos .='<td>'.date ("m/d/y H:i:s.", filemtime("../archivos/".$archivo)).'</td>';
                                         $vmvsarchivos .='<td><a title="Descargar Archivo" href="subidas/" style="color: blue; font-size:18px;"> <span class="icon-download" aria-hidden="true"></span> </a></td>
@@ -120,8 +131,22 @@ $cdi=0;
                                     //closedir($directorio); 
                                     $vmvsarchivos .='
                                 </th>
+                                
                             </tr>
-                            ';} $vmvsarchivos .='
+                            ';}
+                        if ($couarchivo > 2){
+                            $vmvsarchivos .='<tr>
+                                                <th scope="row">xD</th>
+                                                <td>NO VACIO</td>
+                                                <td>NO VACIO</td>
+                                                <td>NO VACIO</td>
+                                                <td>NO VACIO</td>
+                                                <td>NO VACIO</td>
+                                            </tr>';
+                          }else{
+                            echo 'VACIO';
+                          }
+                          $vmvsarchivos .='
                         </tbody>
                     </table>
                     </div>
