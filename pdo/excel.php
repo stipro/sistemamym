@@ -70,6 +70,12 @@ try
                 array_push($arrayval,$lastvenIdsql,$venzon);
                 array_push($arrayvendedorid,$arrayval);
                 unset($arrayval);
+                //INSERTAR  ZONA
+                $insertZon = $conexion->prepare("INSERT INTO t00ven (NZONVEN, FIDCOL, FIDTIPVEN) VALUES (:venzon, :lastcolIdsql, :ventipId )");
+                $insertZon -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
+                $insertZon -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
+                $insertZon -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
+                $insertZon -> execute();
             }
             else{
                 //echo 'Vendedor repetido pero con zona diferente es: '.$venzon.'Nombre '.$pnombre.' '.$snombre.'</br>';
