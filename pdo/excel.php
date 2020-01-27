@@ -42,14 +42,21 @@ try
                 $pnombre = $vendeDato[1];
                 $c++;
                 //CONSULTA COLABORADOR
-                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VPNOCOL=:pnombre AND VAPACOL=:papellido)tbl_tmp GROUP BY id");
+                $existenteCol = $conexion->prepare("SELECT a.*, b.*, tvz.*, tz.NZON
+                FROM t002col AS a 
+                LEFT JOIN t00ven AS b
+                ON a.NIDCOL = b.FIDCOL
+                LEFT JOIN tven_zon AS tvz
+                ON tvz.FIDVEN = b.NIDVEN
+                LEFT JOIN tzona AS tz
+                ON tz.NIDZON = tvz.FIDZON
+                WHERE a.VPNOCOL=:pnombre AND a.VAPACOL=:papellido");
                 $existenteCol->bindValue(':papellido',$papellido);
                 $existenteCol->bindValue(':pnombre',$pnombre);
                 $existenteCol->execute();
                 $resexistenteCol = $existenteCol->fetch();
-                $colIdsql = $resexistenteCol['id'];
-                if ($colIdsql == FALSE)
-                {
+                $zonasql = $resexistenteCol['NZON'];
+                if ($resexistenteCol == FALSE){
                     //INSERTA COLABORADORES
                     $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VPNOCOL) VALUES (:papellido, :pnombre )");
                     $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
@@ -57,130 +64,21 @@ try
                     $insertCol -> execute();
                     //OOBTENGO ID DE LA INSERTACIÓN
                     $lastcolIdsql = $conexion->lastInsertId();
+                    //INSERTA VENDEDOR
+                    $insertVen = $conexion->prepare("INSERT INTO t00ven (FIDCOL, FIDTIPVEN) VALUES (:lastcolIdsql, :ventipId )");
+                    $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
+                    $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
+                    $insertVen -> execute();
+                    $lastvenIdsql = $conexion->lastInsertId();
+                    array_push($arrayval,$lastvenIdsql,$venzon);
+                    array_push($arrayvendedorid,$arrayval);
+                    unset($arrayval);
                 }
-                else{
-                    $lastcolIdsql = $colIdsql;
-                }
-                //INSERTA VENDEDOR
-                $insertVen = $conexion->prepare("INSERT INTO t00ven (FIDCOL, FIDTIPVEN) VALUES (:lastcolIdsql, :ventipId )");
-                $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
-                $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
-                $insertVen -> execute();
-                $lastvenIdsql = $conexion->lastInsertId();
-                array_push($arrayval,$lastvenIdsql,$venzon);
-                array_push($arrayvendedorid,$arrayval);
-                unset($arrayval);
-                //INSERTAR  ZONA
-                $insertZon = $conexion->prepare("INSERT INTO tzona (NZON) VALUES (:venzon)");
-                $insertZon -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
-                //$insertZon -> bindValue(':ndis', $ndis, PDO::PARAM_STR);
-                //$insertZon -> bindValue(':vnomzom', $vnomzom, PDO::PARAM_STR);
-                $insertZon -> execute();
-                $lastzonIdsql = $conexion->lastInsertId();
-                //UNION VENDEDOR CON ZONA
-                $insertVenZona = $conexion->prepare("INSERT INTO tven_zon (FIDVEN, FIDZON) VALUES (:lastvenIdsql, :lastzonIdsql )");
-                $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
-                $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
-                $insertVenZona -> execute();
-                break;
-            case 3:
-                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2]];
-                $papellido = $vendeDato[0];
-                $sapellido = $vendeDato[1];
-                $pnombre = $vendeDato[2];
-                //CONSULTA COLABORADOR
-                $existenteCol = $conexion->prepare("SELECT id, COUNT(*) AS cantidad FROM (SELECT NIDCOL AS id FROM t002col WHERE VPNOCOL=:pnombre AND VAPACOL=:papellido AND VAMACOL=:sapellido)tbl_tmp GROUP BY id");
-                $existenteCol->bindValue(':papellido',$papellido);
-                $existenteCol->bindValue(':sapellido',$sapellido);
-                $existenteCol->bindValue(':pnombre',$pnombre);
-                $existenteCol->execute();
-                $resexistenteCol = $existenteCol->fetch();
-                if ($resexistenteCol['id'] == FALSE)
-                {
-                    //INSERTA COLABORADORES
-                    $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL) VALUES (:papellido, :sapellido, :pnombre)");
-                    $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
-                    $insertCol -> bindValue(':sapellido', $sapellido, PDO::PARAM_STR);
-                    $insertCol -> bindValue(':pnombre', $pnombre, PDO::PARAM_STR);
-                    $insertCol -> execute();
-                    //OOBTENGO ID DE LA INSERTACIÓN
-                    $lastcolIdsql = $conexion->lastInsertId();
-                }
-                else{
-                    $lastcolIdsql = $colIdsql;
-                }
-                //INSERTA VENDEDOR
-                $insertVen = $conexion->prepare("INSERT INTO t00ven (FIDCOL, FIDTIPVEN) VALUES (:lastcolIdsql, :ventipId )");
-                $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
-                $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
-                $insertVen -> execute();
-                $lastvenIdsql = $conexion->lastInsertId();
-                array_push($arrayval,$lastvenIdsql,$venzon);
-                array_push($arrayvendedorid,$arrayval);
-                unset($arrayval);
-                //INSERTAR  ZONA
-                $insertZon = $conexion->prepare("INSERT INTO tzona (NZON) VALUES (:venzon)");
-                $insertZon -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
-                //$insertZon -> bindValue(':ndis', $ndis, PDO::PARAM_STR);
-                //$insertZon -> bindValue(':vnomzom', $vnomzom, PDO::PARAM_STR);
-                $insertZon -> execute();
-                $lastzonIdsql = $conexion->lastInsertId();
-                //UNION VENDEDOR CON ZONA
-                $insertVenZona = $conexion->prepare("INSERT INTO tven_zon (FIDVEN, FIDZON) VALUES (:lastvenIdsql, :lastzonIdsql )");
-                $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
-                $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
-                $insertVenZona -> execute();
-                break;
-            case 4:
-                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2], "SNombre" => $vendeDato[3]];
-                $papellido = $vendeDato[0];
-                $sapellido = $vendeDato[1];
-                $pnombre = $vendeDato[2];
-                $snombre = $vendeDato[3];
-                //CONSULTA COLABORADOR
-                $existenteCol = $conexion->prepare("SELECT a.*, f.NIDCOL, c.NZON
-                FROM t00ven AS a
-                INNER JOIN t002col AS f
-                ON f.NIDCOL = a.FIDCOL
-                INNER JOIN tven_zon AS b
-                ON a.NIDVEN = b.FIDVEN
-                INNER JOIN tzona AS C 
-                ON c.NIDZON = b.FIDZON
-                WHERE f.VAPACOL = :papellido AND f.VAMACOL = :sapellido AND f.VPNOCOL = :pnombre AND f.VSNOCOL = :snombre");
-                $existenteCol->bindValue(':papellido',$papellido);
-                $existenteCol->bindValue(':sapellido',$sapellido);
-                $existenteCol->bindValue(':pnombre',$pnombre);
-                $existenteCol->bindValue(':snombre',$snombre);
-                $existenteCol->execute();
-                $resexistenteCol = $existenteCol->fetchAll();
-                var_dump($resexistenteCol);
-                $colIdsql = $resexistenteCol['NIDCOL'];
-                $nzon = $resexistenteCol['NZON'];
-                if ($colIdsql == FALSE)
-                {
-                    //INSERTA COLABORADORES
-                    /*
-                    $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL, VSNOCOL) VALUES (:papellido, :sapellido, :pnombre, :snombre)");
-                    $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
-                    $insertCol -> bindValue(':sapellido', $sapellido, PDO::PARAM_STR);
-                    $insertCol -> bindValue(':pnombre', $pnombre, PDO::PARAM_STR);
-                    $insertCol -> bindValue(':snombre', $snombre, PDO::PARAM_STR);
-                    $insertCol -> execute();
-                    //OOBTENGO ID DE LA INSERTACIÓN
-                    $lastcolIdsql = $conexion->lastInsertId();
-                    */
-                }else{
-                    $lastcolIdsql = $colIdsql;
-                    if($nzon != $venzon){
-                        //INSERTA VENDEDOR
-                        $insertVen = $conexion->prepare("INSERT INTO t00ven (FIDCOL, FIDTIPVEN) VALUES (:lastcolIdsql, :ventipId )");
-                        $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
-                        $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
-                        $insertVen -> execute();
-                        $lastvenIdsql = $conexion->lastInsertId();
-                        array_push($arrayval,$lastvenIdsql,$venzon);
-                        array_push($arrayvendedorid,$arrayval);
-                        unset($arrayval);
+                if ($zonasql == null){
+                    if($zonasql == $venzon){
+                        echo 'Es igual el dato zona en EXCEL y MYSQL';
+                    }
+                    else{
                         //INSERTAR  ZONA
                         $insertZon = $conexion->prepare("INSERT INTO tzona (NZON) VALUES (:venzon)");
                         $insertZon -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
@@ -194,8 +92,129 @@ try
                         $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
                         $insertVenZona -> execute();
                     }
-                    elseif($nzon == $venzon){
-                        echo 'Son iguales';
+                }
+                break;
+            case 3:                
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2]];
+                $papellido = $vendeDato[0];
+                $sapellido = $vendeDato[1];
+                $pnombre = $vendeDato[2];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT a.*, b.*, tvz.*, tz.NZON
+                FROM t002col AS a 
+                LEFT JOIN t00ven AS b
+                ON a.NIDCOL = b.FIDCOL
+                LEFT JOIN tven_zon AS tvz
+                ON tvz.FIDVEN = b.NIDVEN
+                LEFT JOIN tzona AS tz
+                ON tz.NIDZON = tvz.FIDZON
+                WHERE a.VPNOCOL = :pnombre AND a.VAPACOL = :papellido AND a.VAMACOL = :sapellido");
+                $existenteCol->bindValue(':papellido',$papellido);
+                $existenteCol->bindValue(':sapellido',$sapellido);
+                $existenteCol->bindValue(':pnombre',$pnombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+                $zonasql = $resexistenteCol['NZON'];
+                if ($resexistenteCol == FALSE)
+                {
+                    //INSERTA COLABORADORES
+                    $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL) VALUES (:papellido, :sapellido, :pnombre)");
+                    $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':sapellido', $sapellido, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':pnombre', $pnombre, PDO::PARAM_STR);
+                    $insertCol -> execute();
+                    //OOBTENGO ID DE LA INSERTACIÓN
+                    $lastcolIdsql = $conexion->lastInsertId();
+                    //INSERTA VENDEDOR
+                    $insertVen = $conexion->prepare("INSERT INTO t00ven (FIDCOL, FIDTIPVEN) VALUES (:lastcolIdsql, :ventipId )");
+                    $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
+                    $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
+                    $insertVen -> execute();
+                    $lastvenIdsql = $conexion->lastInsertId();
+                    array_push($arrayval,$lastvenIdsql,$venzon);
+                    array_push($arrayvendedorid,$arrayval);
+                    unset($arrayval);
+                }
+                if ($zonasql == null){
+                    if($zonasql == $venzon){
+                        echo 'Es igual el dato zona en EXCEL y MYSQL';
+                    }
+                    else{
+                        //INSERTAR  ZONA
+                        $insertZon = $conexion->prepare("INSERT INTO tzona (NZON) VALUES (:venzon)");
+                        $insertZon -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
+                        //$insertZon -> bindValue(':ndis', $ndis, PDO::PARAM_STR);
+                        //$insertZon -> bindValue(':vnomzom', $vnomzom, PDO::PARAM_STR);
+                        $insertZon -> execute();
+                        $lastzonIdsql = $conexion->lastInsertId();
+                        //UNION VENDEDOR CON ZONA
+                        $insertVenZona = $conexion->prepare("INSERT INTO tven_zon (FIDVEN, FIDZON) VALUES (:lastvenIdsql, :lastzonIdsql )");
+                        $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
+                        $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
+                        $insertVenZona -> execute();
+                    }
+                }
+                break;
+            case 4:
+                $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2], "SNombre" => $vendeDato[3]];
+                $papellido = $vendeDato[0];
+                $sapellido = $vendeDato[1];
+                $pnombre = $vendeDato[2];
+                $snombre = $vendeDato[3];
+                //CONSULTA COLABORADOR
+                $existenteCol = $conexion->prepare("SELECT a.*, b.*, tvz.*, tz.NZON
+                FROM t002col AS a 
+                LEFT JOIN t00ven AS b
+                ON a.NIDCOL = b.FIDCOL
+                LEFT JOIN tven_zon AS tvz
+                ON tvz.FIDVEN = b.NIDVEN
+                LEFT JOIN tzona AS tz
+                ON tz.NIDZON = tvz.FIDZON
+                WHERE a.VAPACOL = :papellido AND a.VAMACOL = :sapellido AND a.VPNOCOL = :pnombre AND a.VSNOCOL = :snombre");
+                $existenteCol->bindValue(':papellido',$papellido);
+                $existenteCol->bindValue(':sapellido',$sapellido);
+                $existenteCol->bindValue(':pnombre',$pnombre);
+                $existenteCol->bindValue(':snombre',$snombre);
+                $existenteCol->execute();
+                $resexistenteCol = $existenteCol->fetch();
+                $zonasql = $resexistenteCol['NZON'];
+                if ($resexistenteCol == FALSE){
+                    //INSERTA COLABORADORES  
+                    $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL, VSNOCOL) VALUES (:papellido, :sapellido, :pnombre, :snombre)");
+                    $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':sapellido', $sapellido, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':pnombre', $pnombre, PDO::PARAM_STR);
+                    $insertCol -> bindValue(':snombre', $snombre, PDO::PARAM_STR);
+                    $insertCol -> execute();
+                    //OOBTENGO ID DE LA INSERTACIÓN
+                    $lastcolIdsql = $conexion->lastInsertId();
+                    //INSERTA VENDEDOR
+                    $insertVen = $conexion->prepare("INSERT INTO t00ven (FIDCOL, FIDTIPVEN) VALUES (:lastcolIdsql, :ventipId )");
+                    $insertVen -> bindValue(':lastcolIdsql', $lastcolIdsql, PDO::PARAM_STR);
+                    $insertVen -> bindValue(':ventipId', $ventipId, PDO::PARAM_STR);
+                    $insertVen -> execute();
+                    $lastvenIdsql = $conexion->lastInsertId();
+                    array_push($arrayval,$lastvenIdsql,$venzon);
+                    array_push($arrayvendedorid,$arrayval);
+                    unset($arrayval);    
+                }
+                if ($zonasql == null){
+                    if($zonasql == $venzon){
+                        echo 'Es igual el dato zona en EXCEL y MYSQL';
+                    }
+                    else{
+                        //INSERTAR  ZONA
+                        $insertZon = $conexion->prepare("INSERT INTO tzona (NZON) VALUES (:venzon)");
+                        $insertZon -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
+                        //$insertZon -> bindValue(':ndis', $ndis, PDO::PARAM_STR);
+                        //$insertZon -> bindValue(':vnomzom', $vnomzom, PDO::PARAM_STR);
+                        $insertZon -> execute();
+                        $lastzonIdsql = $conexion->lastInsertId();
+                        //UNION VENDEDOR CON ZONA
+                        $insertVenZona = $conexion->prepare("INSERT INTO tven_zon (FIDVEN, FIDZON) VALUES (:lastvenIdsql, :lastzonIdsql )");
+                        $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
+                        $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
+                        $insertVenZona -> execute();
                     }
                 }
                 break;
@@ -205,7 +224,7 @@ try
             }
         }
         //var_dump($arrayvendedorid);
-
+        
         $fregavaven = $conexion->prepare("SELECT  DISTINCT DFECREG FROM t011avavendedor WHERE MONTH(DFECREG)=:frdmes");// OBTENER FECHA RE REGISTRO XLSX
         $fregavaven->bindValue(':frdmes',$frdmes);
         $fregavaven->execute();
@@ -227,16 +246,21 @@ try
                 $existenteVenId->execute();
                 $resexistenteVenId = $existenteVenId->fetch();
                 $zonIdsql = (int)$resexistenteVenId['NIDZON'];
-                //var_dump($zonIdsql);
-                //$venZonsql = $resexistenteVenId['NZONVEN'];
-                //$venZonsql = str_pad($resexistenteVenId['NZONVEN'], 3, "0", STR_PAD_LEFT);
-                /*
-                echo 'ZONA SQL: ';
-                var_dump($venZonsql);
-                echo '</br>';
-                echo 'Zona Excel: ';
-                var_dump($dosvenzon);
-                echo '</br>';*/
+                    if($zonIdsql == FALSE){
+                        echo'no hay dato';
+                    }
+                    else{
+                    //$venZonsql = $resexistenteVenId['NZONVEN'];
+                    //$venZonsql = str_pad($resexistenteVenId['NZONVEN'], 3, "0", STR_PAD_LEFT);
+                    /*
+                    echo 'ZONA SQL: ';
+                    var_dump($venZonsql);
+                    echo '</br>';
+                    echo 'Zona Excel: ';
+                    var_dump($dosvenzon);
+                    echo '</br>';
+                    */
+
                     $impExcel -> bindParam(':selection_1', $zonIdsql, PDO::PARAM_STR);
                     $impExcel -> bindParam(':selection_2', $row["V.BRUTA"], PDO::PARAM_STR);
                     $impExcel -> bindParam(':selection_3', $row["N.CREDITO"], PDO::PARAM_STR);
@@ -252,6 +276,7 @@ try
                     $impExcel -> bindParam(':selection_13', $fecusu, PDO::PARAM_STR);
                     $ejecutar = $impExcel -> execute();
                 
+                }
             }
         }
         else{
@@ -261,7 +286,6 @@ try
                 No se puede registrar, <strong class="letrimpo">ya hay registros con el Mes '.$frdmes.'</strong>, vuelva a intentarlo.
             </div>';
         }
-        
     }
     elseif($vnomarch == "SALIDASCONDICIONVENTA")
     {
