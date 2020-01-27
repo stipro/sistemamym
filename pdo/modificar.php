@@ -1,10 +1,14 @@
 <?php
 include('./../db/conexionPDO.php');
 //SELECT * FROM t002col
-$qcol = $conexion->prepare("SELECT a.*, b.NIDVEN, b.NZONVEN
-                            FROM t002col a
-                            INNER JOIN t00ven b
-                            ON a.NIDCOL = b.FIDCOL");// OBTENER INFORMACIÓN DE USUARIO
+$qcol = $conexion->prepare("SELECT a.*, c.NZON, b.*, f.NIDCOL, f.VPNOCOL, f.VSNOCOL, f.VAPACOL, f.VAMACOL
+FROM t00ven AS a
+INNER JOIN t002col AS f
+ON f.NIDCOL = a.FIDCOL
+INNER JOIN tven_zon AS b
+ON a.NIDVEN = b.FIDVEN
+INNER JOIN tzona AS c 
+ON c.NIDZON = b.FIDZON");// OBTENER INFORMACIÓN DE USUARIO
 //$qcol->setFetchMode(PDO::FETCH_ASSOC);
 $qcol->execute();
 // v(VARIABLE),m(MODAL), modi(ACCIÓN),
@@ -29,7 +33,7 @@ $vmmvendmodi='
                     <option value="" selected>Elige una Opción</option>';
                 while ($mqcol = $qcol->fetch(PDO::FETCH_ASSOC)) 
                 {
-                    $vmmvendmodi.='<option data-value="'.$mqcol["NIDVEN"].'" value="'.$mqcol["NIDVEN"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].' '.$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].' ('.$mqcol['NZONVEN'].')</option>';
+                    $vmmvendmodi.='<option data-value="'.$mqcol["NIDVEN"].'" value="'.$mqcol["NIDVEN"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].' '.$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].' ('.$mqcol['NZON'].')</option>';
                 }
                 $vmmvendmodi.='</select>
                     <!--<select>
