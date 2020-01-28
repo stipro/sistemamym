@@ -37,6 +37,7 @@ try
             case 1:
                 break;
             case 2:
+                /*
                 $arrayvendedor[] = ["PApellido" => $vendeDato[0], "PNombre" => $vendeDato[1]];
                 $papellido = $vendeDato[0];
                 $pnombre = $vendeDato[1];
@@ -93,8 +94,10 @@ try
                         $insertVenZona -> execute();
                     }
                 }
+                */
                 break;
-            case 3:                
+            case 3:
+                /*           
                 $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2]];
                 $papellido = $vendeDato[0];
                 $sapellido = $vendeDato[1];
@@ -152,8 +155,10 @@ try
                         $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
                         $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
                         $insertVenZona -> execute();
+
+                        
                     }
-                }
+                }*/
                 break;
             case 4:
                 $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2], "SNombre" => $vendeDato[3]];
@@ -176,9 +181,10 @@ try
                 $existenteCol->bindValue(':pnombre',$pnombre);
                 $existenteCol->bindValue(':snombre',$snombre);
                 $existenteCol->execute();
-                $resexistenteCol = $existenteCol->fetch();
-                $zonasql = $resexistenteCol['NZON'];
-                $idcolsql = $resexistenteCol['NIDCOL'];
+                $resexistenteCol = $existenteCol->fetchAll();
+                $zonasql = $resexistenteCol[0]['NZON'];
+                $idvensql = $resexistenteCol[0]['NIDVEN'];
+                var_dump($resexistenteCol);
                 if ($resexistenteCol == FALSE){
                     //INSERTA COLABORADORES  
                     $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL, VSNOCOL) VALUES (:papellido, :sapellido, :pnombre, :snombre)");
@@ -199,14 +205,27 @@ try
                     array_push($arrayvendedorid,$arrayval);
                     unset($arrayval);    
                 }
-                echo 'Es igual el dato zona en EXCEL ('.$venzon.') y MYSQL('.$zonasql.') </br>';
-                    if($zonasql == $venzon){
-                        echo 'Son iguales';
-                    }
-                    else{
-                        echo ' id Colaborador es '.$idcolsql.'!!! y ZONA'.$zonasql.'</br>';
-                        var_dump($idcolsql);
-                        //INSERTAR  ZONA
+
+                echo ' zona en EXCEL (';
+                var_dump($venzon);
+                echo ') y MYSQL(';
+                var_dump($zonasql);
+                echo ') </br>';
+                if( $idvensql == FALSE ){
+
+                }
+                else {
+                    $lastvenIdsql = $idvensql;
+                }
+                    if($venzon != $zonasql){
+                        var_dump($resexistenteCol);
+                        echo ' id Vendedor es ';
+                        var_dump($idvensql);
+                        echo '!!! y ZONA ';
+                        var_dump($zonasql);
+                        echo '</br>';
+                        
+                        //INSERTAR  ZONA                        
                         $insertZon = $conexion->prepare("INSERT INTO tzona (NZON) VALUES (:venzon)");
                         $insertZon -> bindValue(':venzon', $venzon, PDO::PARAM_STR);
                         //$insertZon -> bindValue(':ndis', $ndis, PDO::PARAM_STR);
@@ -219,6 +238,11 @@ try
                         $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
                         $insertVenZona -> execute();
                     }
+                    else{
+                        echo 'Son iguales </br>';
+                    }
+
+
                 break;
             case 5:
                 //echo "Hay muchas palabras, verifique ";
@@ -233,6 +257,7 @@ try
         $dfregavaven = $fregavaven->fetch(PDO::FETCH_ASSOC);
         //var_dump($dfregavaven["DFECREG"]);
         //Comprobar si hay registro con el mes
+        /*
         if(is_null($dfregavaven["DFECREG"]))
         {
             //Inserta dato del excel con su id del vendedor
@@ -248,7 +273,7 @@ try
                 $resexistenteVenId = $existenteVenId->fetch();
                 $zonIdsql = (int)$resexistenteVenId['NIDZON'];
                     if($zonIdsql == FALSE){
-                        echo'no hay dato';
+                        echo' (no hay dato) ';
                     }
                     else{
                     //$venZonsql = $resexistenteVenId['NZONVEN'];
@@ -260,7 +285,7 @@ try
                     echo 'Zona Excel: ';
                     var_dump($dosvenzon);
                     echo '</br>';
-                    */
+                    
 
                     $impExcel -> bindParam(':selection_1', $zonIdsql, PDO::PARAM_STR);
                     $impExcel -> bindParam(':selection_2', $row["V.BRUTA"], PDO::PARAM_STR);
@@ -286,7 +311,7 @@ try
                 <a href="#" class="clos" data-dismiss="alert" aria-label="close">&times;</a>
                 No se puede registrar, <strong class="letrimpo">ya hay registros con el Mes '.$frdmes.'</strong>, vuelva a intentarlo.
             </div>';
-        }
+        }*/
     }
     elseif($vnomarch == "SALIDASCONDICIONVENTA")
     {
@@ -497,7 +522,7 @@ try
                 $resexistenteVenId = $existenteVenId->fetch();
                 $zonIdsql = (int)$resexistenteVenId['NIDZON'];
                 if($zonIdsql == FALSE){
-                    echo'no hay dato';
+                    echo' (no hay dato) ';
                 }
                 else{
                     $impExcel -> bindParam(':selection_1', $zonIdsql, PDO::PARAM_STR);
