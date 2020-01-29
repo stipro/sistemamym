@@ -161,6 +161,8 @@ try
                 }*/
                 break;
             case 4:
+                $zonasql = NULL;
+                $idvensql = NULL;
                 $arrayvendedor[] = ["PApellido" => $vendeDato[0], "SApellido" => $vendeDato[1], "PNombre" => $vendeDato[2], "SNombre" => $vendeDato[3]];
                 $papellido = $vendeDato[0];
                 $sapellido = $vendeDato[1];
@@ -181,9 +183,26 @@ try
                 $existenteCol->bindValue(':pnombre',$pnombre);
                 $existenteCol->bindValue(':snombre',$snombre);
                 $existenteCol->execute();
-                $resexistenteCol = $existenteCol->fetchAll();
-                $zonasql = $resexistenteCol[0]['NZON'];
-                $idvensql = $resexistenteCol[0]['NIDVEN'];
+                $resexistenteCol = $existenteCol->fetchAll(PDO::FETCH_ASSOC);
+                echo 'Cantidad del array';
+                $cantsql = count($resexistenteCol);
+                var_dump($cantsql);               
+                if($resexistenteCol){
+                    $zonasql = $resexistenteCol[0]['NZON'];
+                    $idvensql = $resexistenteCol[0]['NIDVEN'];
+                    foreach ($resexistenteCol as $fila){
+                        echo 'SQL ZONA ('.$fila['NZON'].') ID VENDEDOR ('.$fila['NIDVEN'].') EXCEL ZONA ('.$venzon.'</br>';
+                        if($venzon == $fila['NZON']){
+                            echo 'Es Igual';
+                        }
+                        else{
+                            echo 'No es igual';
+                        }    
+                    }
+                }else {
+                    echo'No se encontraron datos';
+                }
+
                 var_dump($resexistenteCol);
                 if ($resexistenteCol == FALSE){
                     //INSERTA COLABORADORES  
