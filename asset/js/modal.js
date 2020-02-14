@@ -5,10 +5,11 @@
 
 document.getElementById('#resp').addEventListener("click", sliderButtonsClick);
 */
+/*
 function cambiarClase(){
     let siteNav = document.getElementById('grupContBarra');
         siteNav.classList.toggle('grupContBarra-open');
-}
+}*/
     // MODAL IMPORTAR //
     let letmodaliteSubExci = document.getElementById('mdliteSubExci');
     let letmodalcontSubExci = document.getElementById('mdlconSubExci');

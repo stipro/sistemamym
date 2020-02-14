@@ -294,6 +294,11 @@ a{
         background: #9edda1;
         height: .7rem;
     }
+    /*MENU*/
+    .icon-circle-down{
+        margin: 1rem;
+    }
+    /*SUB MENU*/
 }
 /* CELULARES HD* 641px, 1024 */
 @media only screen and (min-width: 40.0625rem) and (max-width: 64rem)
@@ -414,6 +419,11 @@ a{
         display: flex;
         align-items: center;
     }
+    /*MENU*/
+    .icon-circle-down{
+        display: none;
+    }
+    /*SUB MENU*/
 }
 .resp{
     display: grid;

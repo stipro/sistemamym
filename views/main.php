@@ -36,12 +36,19 @@
                         <span class="iconLetr-menu">Inicio</span>
                     </a>
                 </li>
-                <li class="grupContLi">
+                <!--MENU-->
+                <li class="grupContLi" id="menuComi">
                     <a class="iconCont-menu" href="#">
                         <span class="iconItem-menu icon-comisiones "></span>
                         <span class="iconLetr-menu">Comisiones</span>
                         <span class="icon-circle-down"></span>
                      </a>
+                     <!--SUBMENU-->
+                     <ul class="" id="submenuComi">
+						<li><a href="#">SubElemento #1 <span class="icon-dot"></span></a></li>
+						<li><a href="#">SubElemento #2 <span class="icon-dot"></span></a></li>
+						<li><a href="#">SubElemento #3 <span class="icon-dot"></span></a></li>
+					</ul>
                 </li>
                 <li class="grupContLi">
                     <a class="iconCont-menu" href="#">

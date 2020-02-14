@@ -168,6 +168,15 @@ try
                 $sapellido = $vendeDato[1];
                 $pnombre = $vendeDato[2];
                 $snombre = $vendeDato[3];
+                //GENERAR NUEVO ARRAY
+                echo 'Foreach </br> TIPO 1';
+                foreach ($tabla as $clave){
+                    $clave['V.BRUTA'];
+                }
+                echo 'TIPO 2';
+                foreach ($tabla as $k => $row){
+                    $row["V.BRUTA"];
+                }
                 //CONSULTA COLABORADOR
                 $existenteCol = $conexion->prepare("SELECT a.*, b.*, tvz.*, tz.NIDZON, tz.NZON
                 FROM t002col AS a 
@@ -202,7 +211,6 @@ try
                 }else {
                     echo'No se encontraron datos';
                 }
-
                 var_dump($resexistenteCol);
                 if ($resexistenteCol == FALSE){
                     //INSERTA COLABORADORES  
@@ -260,8 +268,6 @@ try
                     else{
                         echo 'Son iguales </br>';
                     }
-
-
                 break;
             case 5:
                 //echo "Hay muchas palabras, verifique ";
