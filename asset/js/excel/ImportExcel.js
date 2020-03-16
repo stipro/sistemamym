@@ -197,18 +197,12 @@ function BindTable(jsondata, tableid) {//Function used to convert the JSON array
             var tipselec$ = $('<select/>').addClass( "select"+i ).attr("id","idselect"+i);
             //console.log(cellValue);
             if (cellValue === " ") {
-                console.log('vacio var');
-                //console.log(rptaRegTipo);
-                //console.log(jsrptaRegTipo);
                 if(jsrptaRegTipo.length == 0){
-                    console.log('vacio');
                     let letaletipvenvacio = document.getElementById('aletipvenvacio');
                     letaletipvenvacio.style.display = 'block';
-                    //console.log(jsrptaRegTipo);
                 }
                 else{
-                    console.log('lleno');
-                    console.log(jsrptaRegTipo);
+
                     for (var c = 0; c < jsrptaRegTipo.length; c++) {
                         //console.log(jsrptaRegTipo[i]["tipo"]);
                         objtipoven = jsrptaRegTipo[c]["tipo"];
@@ -216,13 +210,10 @@ function BindTable(jsondata, tableid) {//Function used to convert the JSON array
                         tipselec$.append($('<option/>').attr("id","fila"+i).attr("value",objidtipoven).html(objtipoven));
                     }
                 }
-
-                //console.log(i);
                 row$.append(tipselec$);
                 //row$.append($('<select/>').html(cellValue));
             }
             else{
-                console.log('No vacio var');
                 row$.append($('<td/>').addClass( "tbe-body-ele body"+cont ).html(cellValue));
             }
             
