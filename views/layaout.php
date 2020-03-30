@@ -20,60 +20,79 @@
         <link rel="stylesheet" href="../asset/css/noti.css">
         <link rel="stylesheet" href="../asset/icon/icon.css"><!--font-->
         <link rel="stylesheet" href="../asset/css/modal.css">
-        <link rel="stylesheet" href="../asset/css/grid-list.css">
+        <link rel="stylesheet" href="../asset/css/view.css">
         <link rel="stylesheet" href="../asset/css/base.css">
+        <link rel="stylesheet" href="../asset/css/tabla.css">
     </head>
     <?php include('tipven.php');
     ?>
     <body>
         <header class="grupBarra">
             <ul id="grupContBarra" class="grupContBarra">
+                <aside class="inf_user">
+                    <div><img class="img_user" src="./../asset/img/user2-160x160.jpg" alt=""></div>
+                    <div><a href="#">USUARIO</a></div>
+                </aside>
                 <li class="grupContLi">
                     <a class="iconCont-menu" href="main.php">
-                        <span class="iconItem-menu icon-house "></span>
+                        <span class="iconItem-menu icon-house"></span>
                         <span class="iconLetr-menu">Inicio</span>
                     </a>
                 </li>
                 <!--MENU-->
                 <li class="grupContLi" id="menuComi">
-                    <a class="iconCont-menu" href="comision.php">
-                        <span class="iconItem-menu icon-comisiones "></span>
+                    <a class="iconCont-menu" href="#">
+                        <span class="iconItem-menu icon-comisiones"></span>
                         <span class="iconLetr-menu">Comisiones</span>
-                        <span class="icon-circle-down"></span>
+                        <div class="right_menu">
+                            <span class="icon-circle-down"></span>
+                        </div>
                      </a>
-                     <!--SUBMENU
-                     <ul class="" id="submenuComi">
-						<li><a href="#">SubElemento #1 <span class="icon-dot"></span></a></li>
-						<li><a href="#">SubElemento #2 <span class="icon-dot"></span></a></li>
-						<li><a href="#">SubElemento #3 <span class="icon-dot"></span></a></li>
-					</ul>-->
+                     <!--SUBMENU-->
+                     <ul class="submenuBarra" id="submenuComi">
+						<li class="submenuBarraElem">
+                            <a href="./comision.php">Inicio
+                                <span class="icon-dot"></span>
+                            </a>
+                        </li>
+						<li class="submenuBarraElem"><a href="#">SubElemento #2 <span class="icon-dot"></span></a></li>
+						<li class="submenuBarraElem"><a href="#">SubElemento #3 <span class="icon-dot"></span></a></li>
+					</ul>
                 </li>
                 <li class="grupContLi">
                     <a class="iconCont-menu" href="#">
-                        <span class="iconItem-menu icon-sunat-ose "></span>
+                        <span class="iconItem-menu icon-sunat-ose"></span>
                         <span class="iconLetr-menu">Sunat/OSE</span>
-                        <span class="icon-circle-down"></span>
+                        <div class="right_menu">
+                            <span class="icon-circle-down"></span>
+                        </div>
                     </a>
                 </li>
                 <li class="grupContLi">
                     <a class="iconCont-menu" href="checklist.html">
                         <span class="iconItem-menu icon-cheklist "></span>
                         <span class="iconLetr-menu">Cheklist</span>
-                        <span class="icon-circle-down"></span>
+                        <div class="right_menu">
+                            <span class="icon-circle-down"></span>
+                        </div>
                     </a>
                 </li>
                 <li class="grupContLi">
                     <a class="iconCont-menu" href="#">
                         <span class="iconItem-menu icon-inventario"></span>
                         <span class="iconLetr-menu">Inventario</span>
-                        <span class="icon-circle-down"></span>
+                        <div class="right_menu">
+                            <span class="icon-circle-down"></span>
+                        </div>
                     </a>
                 </li>
                 <li class="grupContLi">
                     <a class="iconCont-menu" href="#">
                         <span class="iconItem-menu icon-atencion"></span>
                         <span class="iconLetr-menu">Atencion</span>
-                        <span class="icon-circle-down"></span>
+                        <div class="right_menu">
+                            <span class="icon-circle-down"></span>
+                        </div>
                     </a>
                 </li>
                 <!--
@@ -126,29 +145,40 @@
                 </div>
             </div>
         </header>
-        <div class="contModu heatConModu">
-            <ul class="heatul">
-                <li class="heatItem"><a class="heatContItem" href=""><span class="iconHea icon-plus"></span></a></li>
-                <li class="heatItem"><a class="heatContItem" href=""><span class="iconHea icon-search"></span></a></li>
-            </ul>
-            <!--  MENU GRID - LIST -->
-            <a class="show-list"><i class="fa icon-list1"></i></a>
-            <a class="hide-list"><i class="fa icon-grid"></i></a>
-        </div>
-        <div class="contModu">
-        <?php global $msgest; echo $msgest; ?>
-            <header class="letrModu">
-                <h1>TITULO DEL MODULO</h1>
-            </header>
-            <!-- CONTENEDOR GRID - LIST -->
-            <div class="container">
-                <div class="box"></div>
-                <div class="box"></div>
-                <div class="box"></div>
-                <div class="box"></div>
-                <div class="box"></div>
-                <div class="box"></div>
-                <div class="box"></div>
+        <div>
+            <div class="contModu heatConModu">
+                <ul class="heatul">
+                    <li class="heatItem"><a class="heatContItem" href=""><span class="iconHea icon-plus"></span></a></li>
+                    <li class="heatItem"><a class="heatContItem" href=""><span class="iconHea icon-search"></span></a></li>
+                </ul>
+            </div>
+            <div class="contModu">
+            <?php global $msgest; echo $msgest; ?>
+                <header class="letrModu">
+                    <h1>MODULO DE COMISIONES</h1>
+                </header>
+                <div class="btnModu">
+                    <div class="eleBtnModu">
+                        <a class="contelembtnModu" href="">
+                            <span class="iconbtnModu icon-farma"></span>
+                            <h2 class="letrbtnModu">FARMA</h2>
+                        </a>
+                    </div>
+                    <div class="eleBtnModu">
+                        <a class="contelembtnModu" href="">
+                            <span class="iconbtnModu icon-consumo"></span>
+                            <h2 class="letrbtnModu">CONSUMO</h2>
+                        </a>
+                    </div>
+                </div>
+                <div class="herModu">
+                    <!-- id[ mdl(modal), Mod(Accion)]-->
+                    <span class="herrElemModu icon-cloud-upload" id="mdlSubExc"></span>
+                    <span class="herrElemModu icon-eye" id=""></span>
+                    <!--<span class="herrElemModu icon-printer" id=""></span>-->
+                    <span class="herrElemModu icon-folder-upload" id="mdlVisImp"></span>
+                    <span class="herrElemModu icon-pencil" id="mdlVenMod"></span>
+                </div>
             </div>
         </div>
         <!-- MODAL SUBIR EXCEL-->
@@ -206,11 +236,24 @@
                 </div>
             </div>
         </div>
+        <!-- MODAL MODIFICACION VENDEDOR-->
+        <!--Resize-->
+        <div id="cuadro" class="estiloCuadro">
+            <header class="headMdl">
+                <h1 class="letrCerrMdl">MODULO DE COMISIONES</h1>
+                <span class="iconCerrMdl icon-cross"></span>
+            </header>
+        </div>
+        <!--MODALS-->
+        <div id="Modals">
+        </div>
+            Arrastra con el ratón<br>para mover este cuadro</div>
         <script src="./../asset/js/modal.js" type="text/javascript"></script>
         <script src="./../asset/js/excel/ImportExcel.js" type="text/javascript"></script>
         <script src="./../asset/js/base.js" type="text/javascript"></script>
         <script src="./../asset/js/baseJquery.js" type="text/javascript"></script>
-        <script src="./../asset/js/grid-list.js" type="text/javascript"></script>
+        <script src="./../asset/js/view.js" type="text/javascript"></script>
+        <script src="./../asset/js/resize.js"></script>
         
     </body>
 </html>

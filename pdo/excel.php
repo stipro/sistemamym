@@ -32,7 +32,6 @@ try
             $venzon = trim($clave["ZONA"]);
             $ventipId = $clave["TIPO"];
             $arrayval = [];
-            //var_dump($clave["VENDEDOR"]);
             $num=count($vendeDato);
             switch ($num)
             {          
@@ -48,7 +47,7 @@ try
                 FROM t002col AS a 
                 LEFT JOIN t00ven AS b
                 ON a.NIDCOL = b.FIDCOL
-                LEFT JOIN tven_zon AS tvz
+                LEFT JOIN tasi_ven_zon AS tvz
                 ON tvz.FIDVEN = b.NIDVEN
                 LEFT JOIN tzona AS tz
                 ON tz.NIDZON = tvz.FIDZON
@@ -86,9 +85,10 @@ try
                         $insertZon -> execute();
                         $lastzonIdsql = $conexion->lastInsertId();
                         //UNION VENDEDOR CON ZONA
-                        $insertVenZona = $conexion->prepare("INSERT INTO tven_zon (FIDVEN, FIDZON) VALUES (:lastvenIdsql, :lastzonIdsql )");
+                        $insertVenZona = $conexion->prepare("INSERT INTO tasi_ven_zon (FIDVEN, FIDZON, DFECREG) VALUES (:lastvenIdsql, :lastzonIdsql, :fecusu)");
                         $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
                         $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
+                        $insertVenZona -> bindValue(':fecusu', $fecusu, PDO::PARAM_STR);
                         $insertVenZona -> execute();
                     }
                 }
@@ -103,7 +103,7 @@ try
                 FROM t002col AS a 
                 LEFT JOIN t00ven AS b
                 ON a.NIDCOL = b.FIDCOL
-                LEFT JOIN tven_zon AS tvz
+                LEFT JOIN tasi_ven_zon AS tvz
                 ON tvz.FIDVEN = b.NIDVEN
                 LEFT JOIN tzona AS tz
                 ON tz.NIDZON = tvz.FIDZON
@@ -144,9 +144,10 @@ try
                         $insertZon -> execute();
                         $lastzonIdsql = $conexion->lastInsertId();
                         //UNION VENDEDOR CON ZONA
-                        $insertVenZona = $conexion->prepare("INSERT INTO tven_zon (FIDVEN, FIDZON) VALUES (:lastvenIdsql, :lastzonIdsql )");
+                        $insertVenZona = $conexion->prepare("INSERT INTO tasi_ven_zon (FIDVEN, FIDZON, DFECREG) VALUES (:lastvenIdsql, :lastzonIdsql, :fecusu)");
                         $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
                         $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
+                        $insertVenZona -> bindValue(':fecusu', $fecusu, PDO::PARAM_STR);
                         $insertVenZona -> execute();
                     }
                 }
@@ -164,7 +165,7 @@ try
                 FROM t002col AS a 
                 LEFT JOIN t00ven AS b
                 ON a.NIDCOL = b.FIDCOL
-                LEFT JOIN tven_zon AS tvz
+                LEFT JOIN tasi_ven_zon AS tvz
                 ON tvz.FIDVEN = b.NIDVEN
                 LEFT JOIN tzona AS tz
                 ON tz.NIDZON = tvz.FIDZON
@@ -177,7 +178,7 @@ try
                 $resexistenteCol = $existenteCol->fetchAll(PDO::FETCH_ASSOC);
                 $cantsql = count($resexistenteCol);
                 if($resexistenteCol == FALSE){
-                    echo 'REGISTRANDO COLABORADOR';
+                    echo 'REGISTRANDO COLABORADOR, ';
                     //INSERTA COLABORADORES  
                     $insertCol = $conexion->prepare("INSERT INTO t002col (VAPACOL, VAMACOL, VPNOCOL, VSNOCOL) VALUES (:papellido, :sapellido, :pnombre, :snombre)");
                     $insertCol -> bindValue(':papellido', $papellido, PDO::PARAM_STR);
@@ -195,7 +196,7 @@ try
                     $lastvenIdsql = $conexion->lastInsertId();
                 }
                 else {
-                    echo ',COLABORADOR EXISTENTE,';
+                    echo 'COLABORADOR EXISTENTE, ';
                     $lastvenIdsql = $resexistenteCol[0]["FIDVEN"];
                     echo ' ID VENDEDOR: '.$lastvenIdsql;
                 }
@@ -225,9 +226,10 @@ try
                     $insertZon -> execute();
                     $lastzonIdsql = $conexion->lastInsertId();
                     //UNION VENDEDOR CON ZONA
-                    $insertVenZona = $conexion->prepare("INSERT INTO tven_zon (FIDVEN, FIDZON) VALUES (:lastvenIdsql, :lastzonIdsql )");
+                    $insertVenZona = $conexion->prepare("INSERT INTO tasi_ven_zon (FIDVEN, FIDZON, DFECREG) VALUES (:lastvenIdsql, :lastzonIdsql, :fecusu)");
                     $insertVenZona -> bindValue(':lastvenIdsql', $lastvenIdsql, PDO::PARAM_STR);
                     $insertVenZona -> bindValue(':lastzonIdsql', $lastzonIdsql, PDO::PARAM_STR);
+                    $insertVenZona -> bindValue(':fecusu', $fecusu, PDO::PARAM_STR);
                     $insertVenZona -> execute();
                 }
                 else {
@@ -236,7 +238,7 @@ try
                 $sqlzonrep = 0;
                 break;
             case 5:
-                //echo "Hay muchas palabras, verifique ";
+                echo "ERROR, SE TIENE MAS NOMBRE O APELLIDOS ADMITIDOS NORMALMENTE, POR FAVOR VERIFICAR, GRACIAS :D";
                 break;
             }
         }
@@ -248,7 +250,7 @@ try
         $dfregavaven = $fregavaven->fetch(PDO::FETCH_ASSOC);
         //var_dump($dfregavaven["DFECREG"]);
         //Comprobar si hay registro con el mes
-        /*
+        
         if(is_null($dfregavaven["DFECREG"]))
         {
             //Inserta dato del excel con su id del vendedor
@@ -269,13 +271,6 @@ try
                     else{
                     //$venZonsql = $resexistenteVenId['NZONVEN'];
                     //$venZonsql = str_pad($resexistenteVenId['NZONVEN'], 3, "0", STR_PAD_LEFT);
-                    /*
-                    echo 'ZONA SQL: ';
-                    var_dump($venZonsql);
-                    echo '</br>';
-                    echo 'Zona Excel: ';
-                    var_dump($dosvenzon);
-                    echo '</br>';
                     
 
                     $impExcel -> bindParam(':selection_1', $zonIdsql, PDO::PARAM_STR);
@@ -302,7 +297,7 @@ try
                 <a href="#" class="clos" data-dismiss="alert" aria-label="close">&times;</a>
                 No se puede registrar, <strong class="letrimpo">ya hay registros con el Mes '.$frdmes.'</strong>, vuelva a intentarlo.
             </div>';
-        }*/
+        }
     }
     elseif($vnomarch == "SALIDASCONDICIONVENTA")
     {

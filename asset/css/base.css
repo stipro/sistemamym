@@ -60,11 +60,10 @@ a{
 .iptcont{
     margin: .4em;
     display: flex;
-    align-items: center;
 }
 .iptconticon{
     display: flex;
-    justify-content: center;;
+    justify-content: center;
 }
 /*BOTONES*/
 .btnCan{
@@ -159,32 +158,56 @@ a{
     .grupContBarra{
         /*display: none;*/
         /*height: calc(100% - 3.5em);*/
-        width: 80%;
+        width: 15.625rem;
+        padding: 0 0.5rem;
         background-color:#fff;
-        clip-path: circle(0px at top left);
+        /*clip-path: circle(0px at top left);*/
+        left: -100%;
         transition: clip-path ease-in-out 700ms;
         position: absolute;
         top: 3.5em;
     }
-    .grupContLi{
-        border-bottom: 1px solid #575766;
-        border-right: 1px solid #575766;
+    .inf_user{
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #4f5962;
+        padding: 1rem 0;
     }
-    .grupContLi:hover{
+    .img_user{
+        width: 2.1rem;
+        border-radius: 50%;
+    }
+    .grupContLi{
+        margin-bottom: .2rem;
+    }
+    .submenuBarra{
+        display: none;
+        padding: 0.5rem 1rem;
+    }
+    .submenuBarraElem{
+        padding: 0.5rem 1rem;
+    }
+    .submenuBarraElem:hover{
         background-color: #4caf50;
     }
     .iconCont-menu{
-        display: flex;
-        justify-content: space-around;
+        display: grid;
+        grid-template-columns: 15% 50% auto;
         align-items: center;
-        padding: 2em 6em;;
+        padding: .5rem 1rem;;
+    }
+    .iconCont-menu:hover{
+        background-color: #4caf50;
     }
     .iconItem-menu{
         min-width: 1.1em;
         min-height: 1.1em;
-        font-size: 1.6em;
+        font-size: 1.1em;
         background-size: 100%;
         margin-right: 1em;
+    }
+    .right_menu{
+
     }
     .grupContBarra-open{
         clip-path: circle(150% at top right);
@@ -294,6 +317,24 @@ a{
         background: #9edda1;
         height: .7rem;
     }
+    select{
+        max-width: 12rem;
+        border: 1px solid rgba(34,36,38,.15);
+        border-radius: .28em;
+        padding: .8em;
+    }
+    .conCon{
+        
+    }
+    .iteCon{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+    .titCon{
+        margin-right: 1rem;
+    }
     /*MENU*/
     .icon-circle-down{
         margin: 1rem;
@@ -327,6 +368,21 @@ a{
     .iconCont-menu{
         display: grid;
         grid-template-rows: 2.7em;
+    }
+    .inf_user{
+        display: none;
+    }
+    /* SUBMENU*/
+    .submenuBarra{
+        background-color: rebeccapurple;
+        position: absolute;
+        display: block;
+        width: 15.625rem;
+        left: 0;
+        top: 2.7rem;
+    }
+    .submenuBarraElem{
+        padding: .5rem 1rem;
     }
     .iconItem-menu{
         background-position: 50%;
@@ -383,6 +439,7 @@ a{
     }
     .iconCont-menu{
         display: grid;
+        margin: .4em .2em;
         text-decoration: none;
         text-align: center;
         color: #1b1c1d;

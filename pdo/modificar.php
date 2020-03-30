@@ -5,7 +5,7 @@ $qcol = $conexion->prepare("SELECT a.*, c.NZON, b.*, f.NIDCOL, f.VPNOCOL, f.VSNO
 FROM t00ven AS a
 INNER JOIN t002col AS f
 ON f.NIDCOL = a.FIDCOL
-INNER JOIN tven_zon AS b
+INNER JOIN tasi_ven_zon AS b
 ON a.NIDVEN = b.FIDVEN
 INNER JOIN tzona AS c 
 ON c.NIDZON = b.FIDZON");// OBTENER INFORMACIÓN DE USUARIO
@@ -27,15 +27,23 @@ $vmmvendmodi='
             </div>
             <!--Contido del Modal-->
             <div class="modal-body" style="overflow:auto;">
-                <div class="contInpufc">
-                <label>Vendedor</label>
-                <select name="venMod" id="venMod">
-                    <option value="" selected>Elige una Opción</option>';
-                while ($mqcol = $qcol->fetch(PDO::FETCH_ASSOC)) 
-                {
-                    $vmmvendmodi.='<option data-value="'.$mqcol["NIDVEN"].'" value="'.$mqcol["NIDVEN"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].' '.$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].' ('.$mqcol['NZON'].')</option>';
-                }
-                $vmmvendmodi.='</select>
+                <div class="iteCon">
+                    <label class="titCon">Ingrese Fecha</label>
+                    <div class="contInpufc">
+                        <i class="iconInpufc icon-calendar"></i>
+                        <input id="iptvendat" class="fechconsBusExci"  type="month" name="mes" step="1" min="2015-12" max="2020-12" value="2019-01" >
+                    </div>
+                </div>
+                <div class="iteCon">
+                    <label class="titCon">Vendedor</label>
+                    <select name="venMod" id="venMod">
+                        <option value="" selected>Elige una Opción</option>';
+                        while ($mqcol = $qcol->fetch(PDO::FETCH_ASSOC)) 
+                        {
+                            $vmmvendmodi.='<option data-value="'.$mqcol["NIDVEN"].'" value="'.$mqcol["NIDVEN"].'">'.$mqcol["VPNOCOL"].' '.$mqcol["VSNOCOL"].' '.$mqcol["VAPACOL"].' '.$mqcol["VAMACOL"].' ( ZONA '.$mqcol['NZON'].')</option>';
+                        }
+                        $vmmvendmodi.='
+                    </select>
                     <!--<select>
                         <option value="" selected>Elige una Opción</option>
                         <option value="saab">Saab</option>
@@ -43,58 +51,86 @@ $vmmvendmodi='
                         <option value="audi">Audi</option>
                     </select>-->
                 </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-calendar"></i>
-                    <input id="iptnomtipven" class="fechconsBusExci" type="date" name="" id="" placeholder="Ingrese nombre" value="">
+                <div class="iteCon">
+                    <h2> ZONA : '.$mqcol['NZON'].'</h2>
                 </div>
-                <div class="contInpufc">
-                    <i class="iconInpufc icon-calendar"></i>
-                    <input id="iptvendat" class="fechconsBusExci"  type="month" name="mes" step="1" min="2015-12" max="2020-12" value="2019-01" >
-                </div>
-                <div id="resvenDato">
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptnvenbru" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                <div id="resvenDato" class="conCon">
+                    <div class="iteCon">
+                        <label class="titCon" for="iptnvenbru">Venta Bruta</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptnvenbru" class="fechconsBusExci" type="text" name="" id="" placeholder="V. Bruta" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptnnetcre" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Nota Credito</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptnnetcre" class="fechconsBusExci" type="text" name="" id="" placeholder="N. Credito" value="">
+                        </div>
+                    </div>                    
+                    <div class="iteCon">
+                        <label class="titCon" for="">Venta Neta</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptnvennet" class="fechconsBusExci" type="text" name="" id="" placeholder="V. Neta" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptnvennet" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Cuota</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptncuota" class="fechconsBusExci" type="text" name="" id="" placeholder="Cuota" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptncuota" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">%</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptnporcen" class="fechconsBusExci" type="text" name="" id="" placeholder="%" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptnporcen" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Total Clientes</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptntotcli" class="fechconsBusExci" type="text" name="" id="" placeholder="T. Clientes" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptntotcli" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Cobertura</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptncobert" class="fechconsBusExci" type="text" name="" id="" placeholder="Cobertura" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptncobert" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Cobrado</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptncobrad" class="fechconsBusExci" type="text" name="" id="" placeholder="Cobrado" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptncobrad" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Total por Cobrar</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptntipcob" class="fechconsBusExci" type="text" name="" id="" placeholder="T. por Cobrar" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptntipcob" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Morosidad</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptnmorosi" class="fechconsBusExci" type="text" name="" id="" placeholder="Morosidad" value="">
+                        </div>
                     </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptnmorosi" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
-                    </div>
-                    <div class="contInpufc">
-                        <i class="iconInpufc icon-coin-dollar"></i>
-                        <input id="iptnmoroso" class="fechconsBusExci" type="text" name="" id="" placeholder="Ingrese nombre" value="">
+                    <div class="iteCon">
+                        <label class="titCon" for="">Moroso</label>
+                        <div class="contInpufc">
+                            <i class="iconInpufc icon-coin-dollar"></i>
+                            <input id="iptnmoroso" class="fechconsBusExci" type="text" name="" id="" placeholder="Moroso" value="">
+                        </div>
                     </div>
                 </div>
             </div>
